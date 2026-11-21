@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Programul de muncă (2026 &amp; 2027)</title>
 
-    <!-- Setări PWA & Pictogramă personalizată -->
+    <!-- Setări PWA & Pictogramă personalizată (înlocuiește litera gri "G" pe Android/Chrome) -->
     <meta name="application-name" content="SmartWork">
     <meta name="apple-mobile-web-app-title" content="SmartWork">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,6 +17,7 @@
     <link id="pwa-manifest" rel="manifest" href="">
 
     <script>
+        /* Generează automat pictograma PNG (512x512) și Manifestul Web App pentru Android/Chrome */
         (function setupCustomSmartWorkIcon() {
             try {
                 const canvas = document.createElement('canvas');
@@ -38,6 +36,7 @@
                     c.closePath();
                 }
 
+                // 1. Fundal albastru rotunjit
                 const grad = ctx.createLinearGradient(0, 0, 512, 512);
                 grad.addColorStop(0, '#2563eb');
                 grad.addColorStop(1, '#1e3a8a');
@@ -45,6 +44,7 @@
                 roundRect(ctx, 0, 0, 512, 512, 112);
                 ctx.fill();
 
+                // 2. Raze albe dreapta-sus
                 ctx.strokeStyle = '#ffffff';
                 ctx.lineWidth = 13;
                 ctx.lineCap = 'round';
@@ -54,6 +54,7 @@
                 ctx.moveTo(424, 164); ctx.lineTo(458, 172);
                 ctx.stroke();
 
+                // 3. Calendar înclinat
                 ctx.save();
                 ctx.translate(236, 244);
                 ctx.rotate(-7 * Math.PI / 180);
@@ -74,12 +75,14 @@
                 ctx.closePath();
                 ctx.fill();
 
+                // Inele calendar
                 ctx.fillStyle = '#0f172a';
                 roundRect(ctx, 152, 82, 24, 54, 12);
                 ctx.fill();
                 roundRect(ctx, 290, 82, 24, 54, 12);
                 ctx.fill();
 
+                // Pătrățele zile
                 const cols = [132, 188, 244, 300];
                 const rows = [212, 266, 316];
                 rows.forEach((ry, rIdx) => {
@@ -105,6 +108,7 @@
                 });
                 ctx.restore();
 
+                // 4. Servietă alb-albastru stânga-jos
                 ctx.strokeStyle = '#0f172a';
                 ctx.lineWidth = 13;
                 roundRect(ctx, 116, 286, 56, 46, 14);
@@ -126,6 +130,7 @@
                 roundRect(ctx, 128, 360, 32, 34, 8);
                 ctx.fill();
 
+                // 5. Ceas dreapta-jos
                 ctx.fillStyle = '#f8fafc';
                 ctx.beginPath();
                 ctx.arc(352, 346, 102, 0, Math.PI * 2);
@@ -134,6 +139,7 @@
                 ctx.lineWidth = 18;
                 ctx.stroke();
 
+                // Repere ceas
                 ctx.strokeStyle = '#1e3a8a';
                 ctx.lineWidth = 10;
                 ctx.beginPath();
@@ -143,6 +149,7 @@
                 ctx.moveTo(416, 346); ctx.lineTo(430, 346);
                 ctx.stroke();
 
+                // Acele ceasului
                 ctx.strokeStyle = '#0f172a';
                 ctx.lineWidth = 14;
                 ctx.beginPath();
@@ -162,6 +169,7 @@
                     appleLink.href = pngDataUrl;
                 }
 
+                // Manifest Web App pentru ecranul principal Android
                 const manifestObj = {
                     name: 'SmartWork - Programul de muncă',
                     short_name: 'SmartWork',
@@ -184,6 +192,9 @@
     </script>
 
     <style>
+        /* =====================================================================
+           1. DESIGN TOKENS & BASE STYLES (100% SELF-CONTAINED)
+           ===================================================================== */
         :root {
             --bg-body: #f8fafc;
             --bg-card: #ffffff;
@@ -267,6 +278,9 @@
             background: #94a3b8;
         }
 
+        /* =====================================================================
+           2. HEADER & NAVIGATION CONTROLS
+           ===================================================================== */
         .app-header {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
@@ -517,6 +531,9 @@
             flex-wrap: wrap;
         }
 
+        /* =====================================================================
+           3. LEGEND, SHARE ACTIONS & STATS BAR
+           ===================================================================== */
         .sub-toolbar {
             max-width: 1600px;
             width: 100%;
@@ -584,6 +601,9 @@
             font-weight: 800;
         }
 
+        /* =====================================================================
+           4. SCHEDULE TABLE CONTAINER (MONDAY - SUNDAY)
+           ===================================================================== */
         .main-workspace {
             flex: 1;
             max-width: 1600px;
@@ -1010,6 +1030,9 @@
             border-right: 2px solid var(--border-strong);
         }
 
+        /* =====================================================================
+           5. 90-DEGREE ROTATED FULLSCREEN SCHEDULE MODE
+           ===================================================================== */
         #fullscreen-overlay-shell.active {
             position: fixed;
             inset: 0;
@@ -1197,6 +1220,9 @@
             }
         }
 
+        /* =====================================================================
+           6. MODALS & TOAST NOTIFICATIONS
+           ===================================================================== */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -1450,6 +1476,9 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* =====================================================================
+           7. PRINT STYLES
+           ===================================================================== */
         @media print {
             .app-header, .sub-toolbar, .emp-del-btn, #fullscreen-top-bar {
                 display: none !important;
@@ -1473,6 +1502,7 @@
     </style>
 </head>
 <body>
+    <!-- TOP HEADER BAR -->
     <header class="app-header">
         <div class="header-inner">
             <button type="button" id="brand-trigger-btn" class="brand-trigger" title="Click pentru a deschide Programul de muncă rotit la 90° pe tot ecranul">
@@ -1500,6 +1530,7 @@
                 </div>
             </button>
 
+            <!-- Year + Week Navigation + Language Switcher -->
             <div class="week-navigator">
                 <button type="button" id="prev-week-btn" class="btn btn-icon" title="Săptămâna anterioară">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1534,6 +1565,7 @@
                 </select>
             </div>
 
+            <!-- Action Buttons -->
             <div class="header-actions">
                 <button type="button" id="save-changes-btn" class="btn btn-save" title="Salvează toate modificările făcute în tabel">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -1582,6 +1614,7 @@
         </div>
     </header>
 
+    <!-- LEGEND, SHARE ACTIONS & STATS BAR -->
     <section class="sub-toolbar">
         <div class="legend-list">
             <span class="legend-pill shift-work"><span class="legend-dot" style="background:#059669"></span><span id="legend-work-text">Program (ex. 07:00 / 08:00 / 10:00)</span></span>
@@ -1624,6 +1657,7 @@
         </div>
     </section>
 
+    <!-- MAIN SCHEDULE WORKSPACE -->
     <main class="main-workspace">
         <div id="fullscreen-overlay-shell">
             <div id="fullscreen-rotated-stage">
@@ -1826,11 +1860,12 @@
         </div>
     </div>
 
+    <!-- TOAST CONTAINER -->
     <div id="toast-container"></div>
 
     <script>
         /* =====================================================================
-           1. MULTI-LAYER PERSISTENT STORAGE
+           1. MULTI-LAYER PERSISTENT STORAGE (LOCALSTORAGE + INDEXEDDB + WINDOW.NAME)
            ===================================================================== */
         const STORAGE_KEY = 'planificator_program_o_tura_2026_2027_v6';
         const LANG_STORAGE_KEY = 'planificator_program_lang_2026_2027_v1';
@@ -1876,7 +1911,9 @@
                         return parsed;
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+                // Ignore malformed window.name
+            }
             return {};
         }
 
@@ -1888,7 +1925,9 @@
                 if (serialized.length < 1800000) {
                     window.name = serialized;
                 }
-            } catch (err) {}
+            } catch (err) {
+                // Ignore window.name quota errors
+            }
         }
 
         function writeToIndexedDB(key, val) {
@@ -1898,7 +1937,9 @@
                     const tx = db.transaction(IDB_STORE_NAME, 'readwrite');
                     const store = tx.objectStore(IDB_STORE_NAME);
                     store.put(val, key);
-                } catch (err) {}
+                } catch (err) {
+                    // Ignore IDB write error
+                }
             });
         }
 
@@ -1941,7 +1982,9 @@
 
             try {
                 window.localStorage.setItem(key, strVal);
-            } catch (err) {}
+            } catch (err) {
+                // Fallback layers (IndexedDB + window.name + memory) remain active
+            }
         }
 
         async function hydrateFromIndexedDBIfNeeded(onHydrated) {
@@ -1983,7 +2026,7 @@
         }
 
         /* =====================================================================
-           2. MULTI-LANGUAGE DICTIONARY
+           2. MULTI-LANGUAGE DICTIONARY (RO, DE, EN, RU, TR, NL)
            ===================================================================== */
         const TRANSLATIONS = {
             ro: {
@@ -2077,8 +2120,8 @@
                 shareModalTitle: 'Trimite Săptămâna & Imaginea (.PNG)',
                 shareModalSubtitle: 'Săpt. {week} ({range}) • Imagine PNG gata de trimis',
                 shareError: 'Nu s-a putut genera imaginea PNG a tabelului.',
-                shareHelperNative: 'Poți trimite textul direct pe WhatsApp sau Email, ori poți trimite / descărca imaginea PNG.',
-                shareHelperFallback: 'Poți trimite textul direct pe WhatsApp sau Email, ori poți descărca imaginea PNG.',
+                shareHelperNative: 'Se trimite săptămâna selectată și imaginea PNG a tabelului prin WhatsApp sau Email.',
+                shareHelperFallback: 'Se trimite săptămâna selectată și imaginea PNG a tabelului.',
                 downloadPngBtn: '⬇ Descarcă PNG',
                 copyImageBtn: '📋 Copiază Imagine',
                 copyTextModalBtn: '📄 Copiază Săptămâna',
@@ -2093,6 +2136,13 @@
                 canvasLegendVrij: 'Liber',
                 canvasLegendVakantie: 'Vacanță',
                 shareTextTitle: 'PROGRAMUL DE MUNCĂ - Săpt. {week} ({range})',
+                shareTextDaysLine: 'Zile: {daysLine}',
+                shareTextNoEmp: 'Nu există angajați în program pentru această săptămână.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'Prezenți / zi: {presentLine}',
+                shareTextTotalLine: 'Total zile lucrate în săptămână: {days} zile ({count} angajați)',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
                 toastFirstWeek2026: 'Ai ajuns la prima săptămână din 2026.',
                 toastLastWeek2027: 'Ai ajuns la ultima săptămână din 2027.',
                 toastWeek47: 'Afișat Săpt. 47 (16 – 22 Noiembrie 2026).',
@@ -2113,21 +2163,761 @@
                 toastPngDownloaded: 'Imaginea {filename} a fost descărcată.',
                 toastPngOpenFail: 'Deschide imaginea din previzualizare pentru a o salva.',
                 toastNoPng: 'Nu există o imagine PNG generată.',
-                toastImgCopied: 'Imaginea tabelului a fost copiată în clipboard!',
-                toastImgCopyFallback: 'PNG-ul a fost descărcat pentru atașare.',
+                toastImgCopied: 'Imaginea tabelului a fost copiată în clipboard! O poți lipi direct în WhatsApp sau Email.',
+                toastImgCopyFallback: 'Browserul nu permite copierea directă a imaginii; PNG-ul a fost descărcat pentru atașare.',
+                toastNoPngGen: 'Nu s-a putut genera imaginea PNG.',
                 toastSharedWa: 'Săptămâna și imaginea PNG au fost trimise către WhatsApp.',
                 toastSharedMail: 'Săptămâna și imaginea PNG au fost trimise către Email.',
                 toastShareCancelled: 'Partajarea a fost anulată.',
-                toastOpenedWa: 'PNG-ul a fost pregătit și s-a deschis WhatsApp.',
+                toastOpenedWa: 'Săptămâna și imaginea PNG au fost pregătite pentru WhatsApp.',
                 toastOpenedWaText: 'Săptămâna a fost trimisă către WhatsApp.',
                 toastOpenedMail: 'Săptămâna a fost trimisă către Email.',
                 toastFsActive: 'Ecran complet 90° activat • Apasă Înapoi pentru pagina principală.'
+            },
+            de: {
+                pageTitle: 'Arbeitsplan & Schichten (2026 & 2027)',
+                brandTitle: 'Arbeitsplan',
+                brandSubtitle: 'Auf eine Zelle klicken zum Bearbeiten • Auf Titel klicken für 90°-Ansicht',
+                brandTooltip: 'Klicken, um den Arbeitsplan um 90° gedreht im Vollbild zu öffnen',
+                prevWeekTitle: 'Vorherige Woche',
+                nextWeekTitle: 'Nächste Woche',
+                yearAria: 'Jahr auswählen',
+                weekAria: 'Woche auswählen',
+                langAria: 'Sprache auswählen',
+                weekPrefix: 'KW',
+                week47Btn: 'KW 47',
+                week47Title: 'Zu KW 47 wechseln (16.–22. Nov 2026)',
+                saveChangesBtn: 'Änderungen speichern',
+                saveChangesPending: 'Änderungen speichern •',
+                saveChangesTitle: 'Alle Änderungen in der Tabelle speichern',
+                addEmployeeBtn: '+ Mitarbeiter',
+                copyPrevWeekBtn: 'Vorwoche kopieren',
+                copyPrevWeekTitle: 'Plan der vorherigen Woche kopieren',
+                fullscreen90Btn: 'Vollbild 90°',
+                fullscreen90Title: 'Um 90° gedrehte Vollbildansicht',
+                printBtn: 'Drucken',
+                printTitle: 'Drucken oder als PDF speichern',
+                legendWork: 'Arbeitszeit (z. B. 07:00 / 08:00 / 10:00)',
+                legendExtra: 'Extra',
+                legendVrij: 'Frei',
+                legendVakantie: 'Urlaub',
+                whatsappBtn: 'WhatsApp',
+                whatsappTitle: 'Woche und Tabellenbild über WhatsApp teilen',
+                emailBtn: 'E-Mail',
+                emailTitle: 'Woche und Tabellenbild per E-Mail senden',
+                copyTextBtn: 'Text kopieren',
+                copyTextTitle: 'Aktuelle Woche kopieren',
+                statsEmployees: 'Mitarbeiter:',
+                statsWorkedDays: 'Arbeitstage / Wo.:',
+                daySingular: 'Tag',
+                dayPlural: 'Tage',
+                fsSave: '💾 Speichern',
+                fsPrevWeek: '◀ Vorwoche',
+                fsNextWeek: 'Nächste Wo. ▶',
+                fsRotate: '↻ Drehen ±90°',
+                fsExit: '✕ Beenden (ESC)',
+                colEmployee: 'Mitarbeiter',
+                colEmployeeDetails: 'MITARBEITER & DETAILS',
+                colDays: 'Tage',
+                colDaysUpper: 'TAGE',
+                presentPerDay: 'Anwesend / Tag',
+                noEmployeesTable: 'Keine Mitarbeiter vorhanden. Klicken Sie auf <strong>+ Mitarbeiter</strong>, um zu starten.',
+                noEmployeesCanvas: 'Für diese Woche sind keine Mitarbeiter eingetragen.',
+                removeEmployeeTitle: 'Mitarbeiter entfernen',
+                setCellTitle: 'Klicken, um Arbeitszeit festzulegen',
+                days: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+                daysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+                monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+                shiftModalTitleDay: 'Plan • {day}',
+                shiftModalSubtitle: '{name} ({date} {year})',
+                closeModalAria: 'Schließen',
+                quickPresetsLabel: 'Startzeit oder Status schnell wählen:',
+                presetWorkDesc: 'Arbeitstag',
+                presetExtraTitle: '{time} • Extra',
+                presetExtraDesc: 'Zusätzlicher Arbeitstag',
+                statusVrijLabel: 'Frei',
+                presetVrijDesc: 'Freier Tag (zählt nicht als Arbeitstag)',
+                statusVakantieLabel: 'Urlaub',
+                presetVakantieDesc: 'Urlaub (zählt nicht als Arbeitstag)',
+                customLabelField: 'Startzeit oder Status',
+                customLabelPlaceholder: 'Z. B. 07:00, 08:00, 10:00, Frei, Urlaub',
+                customTypeField: 'Tagestyp',
+                typeWorkOption: 'Arbeitstag',
+                typeExtraOption: 'Extra (zusätzlich)',
+                typeVrijOption: 'Frei',
+                typeVakantieOption: 'Urlaub',
+                customNoteField: 'Optionale Notiz (z. B. Extra, Gruppe A)',
+                customNotePlaceholder: 'Z. B. Extra',
+                deleteCellBtn: 'Löschen',
+                addExtraDayBtn: '+ Extra-Tag hinzufügen',
+                resetGroupWeekBtn: 'Gruppenplan anwenden',
+                applyMonFriBtn: 'Mo–Fr anwenden',
+                cancelBtn: 'Abbrechen',
+                saveBtn: 'Speichern',
+                addEmpModalTitle: 'Neuen Mitarbeiter hinzufügen',
+                addEmpModalSubtitle: 'Erscheint sofort im Wochenplan',
+                empNameLabel: 'Vor- und Nachname *',
+                empNamePlaceholder: 'Z. B. Max Mustermann',
+                empRoleLabel: 'Funktion / Gruppe (optional)',
+                empRolePlaceholder: 'Z. B. Gruppe A, Gruppe B...',
+                empDefaultRole: 'Mitarbeiter',
+                addEmpSubmitBtn: 'Zum Plan hinzufügen',
+                shareModalTitle: 'Woche & Tabellenbild senden (.PNG)',
+                shareModalSubtitle: 'KW {week} ({range}) • Bereit zum Teilen',
+                shareError: 'Das PNG-Bild der Tabelle konnte nicht erstellt werden.',
+                shareHelperNative: 'Die ausgewählte Woche und das PNG-Tabellenbild werden über WhatsApp oder E-Mail gesendet.',
+                shareHelperFallback: 'Die ausgewählte Woche und das PNG-Tabellenbild werden gesendet.',
+                downloadPngBtn: '⬇ PNG herunterladen',
+                copyImageBtn: '📋 Bild kopieren',
+                copyTextModalBtn: '📄 Woche kopieren',
+                waTextBtn: 'WhatsApp (Woche)',
+                waImageBtn: 'WhatsApp (Bild)',
+                mailImageBtn: 'E-Mail',
+                closeBtn: 'Schließen',
+                canvasBannerTitle: 'ARBEITSPLAN • KALENDERWOCHE {week} ({range})',
+                canvasBannerStats: 'Mitarbeiter: {count}   •   Arbeitstage gesamt: {days} Tage',
+                canvasLegendWork: 'Arbeitszeit (z. B. 07:00 / 08:00 / 10:00)',
+                canvasLegendExtra: 'Extra',
+                canvasLegendVrij: 'Frei',
+                canvasLegendVakantie: 'Urlaub',
+                shareTextTitle: 'ARBEITSPLAN - KW {week} ({range})',
+                shareTextDaysLine: 'Tage: {daysLine}',
+                shareTextNoEmp: 'Keine Mitarbeiter für diese Woche eingetragen.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'Anwesend / Tag: {presentLine}',
+                shareTextTotalLine: 'Arbeitstage gesamt in der Woche: {days} Tage ({count} Mitarbeiter)',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
+                toastFirstWeek2026: 'Erste Woche von 2026 erreicht.',
+                toastLastWeek2027: 'Letzte Woche von 2027 erreicht.',
+                toastWeek47: 'KW 47 angezeigt (16.–22. November 2026).',
+                toastChangesSaved: 'Alle Änderungen wurden gespeichert.',
+                toastShiftSaved: 'Tagesplan aktualisiert. Klicken Sie auf „Änderungen speichern“ zur Bestätigung.',
+                toastExtraDayAdded: 'Extra-Tag für {day} hinzugefügt.',
+                toastGroupReapplied: 'Gruppenplan für diese Woche erneut angewendet.',
+                toastAppliedMonFri: 'Plan auf Montag–Freitag angewendet.',
+                toastCellCleared: 'Zelle geleert.',
+                toastEmpAdded: 'Mitarbeiter {name} hinzugefügt.',
+                toastEmpRemoved: 'Mitarbeiter aus der Liste entfernt.',
+                toastNoPrevWeek: 'Keine vorherige Woche verfügbar.',
+                toastPrevWeekEmpty: 'In KW {week} sind keine Einträge gespeichert.',
+                toastWeekCopied: 'Plan aus KW {week} kopiert.',
+                toastTextCopied: 'Aktuelle Woche kopiert.',
+                toastTextCopyFail: 'Automatisches Kopieren nicht möglich; bitte WhatsApp oder E-Mail nutzen.',
+                toastPngNotReady: 'PNG-Bild konnte nicht vorbereitet werden.',
+                toastPngDownloaded: 'Bild {filename} heruntergeladen.',
+                toastPngOpenFail: 'Öffnen Sie das Bild in der Vorschau, um es zu speichern.',
+                toastNoPng: 'Kein PNG-Bild vorhanden.',
+                toastImgCopied: 'Tabellenbild in die Zwischenablage kopiert!',
+                toastImgCopyFallback: 'PNG wurde zum Anhängen heruntergeladen.',
+                toastNoPngGen: 'PNG-Bild konnte nicht erzeugt werden.',
+                toastSharedWa: 'Woche und PNG-Bild an WhatsApp gesendet.',
+                toastSharedMail: 'Woche und PNG-Bild an E-Mail gesendet.',
+                toastShareCancelled: 'Teilen abgebrochen.',
+                toastOpenedWa: 'Woche und PNG-Bild für WhatsApp vorbereitet.',
+                toastOpenedWaText: 'Woche an WhatsApp gesendet.',
+                toastOpenedMail: 'Woche an E-Mail gesendet.',
+                toastFsActive: '90°-Vollbild aktiv • Zurück drücken für Hauptansicht.'
+            },
+            en: {
+                pageTitle: 'Work Schedule & Shifts (2026 & 2027)',
+                brandTitle: 'Work Schedule',
+                brandSubtitle: 'Click any cell to edit • Click title for 90° fullscreen',
+                brandTooltip: 'Click to open Work Schedule rotated 90° in fullscreen',
+                prevWeekTitle: 'Previous week',
+                nextWeekTitle: 'Next week',
+                yearAria: 'Select year',
+                weekAria: 'Select week',
+                langAria: 'Select language',
+                weekPrefix: 'Week',
+                week47Btn: 'Week 47',
+                week47Title: 'Go to Week 47 (16–22 Nov 2026)',
+                saveChangesBtn: 'Save changes',
+                saveChangesPending: 'Save changes •',
+                saveChangesTitle: 'Save all changes made in the table',
+                addEmployeeBtn: '+ Employee',
+                copyPrevWeekBtn: 'Copy Prev. Week',
+                copyPrevWeekTitle: 'Copy schedule from previous week',
+                fullscreen90Btn: '90° Screen',
+                fullscreen90Title: '90° rotated fullscreen view',
+                printBtn: 'Print',
+                printTitle: 'Print or save as PDF',
+                legendWork: 'Schedule (e.g. 07:00 / 08:00 / 10:00)',
+                legendExtra: 'Extra',
+                legendVrij: 'Off',
+                legendVakantie: 'Vacation',
+                whatsappBtn: 'WhatsApp',
+                whatsappTitle: 'Share week and schedule image on WhatsApp',
+                emailBtn: 'Email',
+                emailTitle: 'Send week and schedule image by Email',
+                copyTextBtn: 'Copy Text',
+                copyTextTitle: 'Copy current week',
+                statsEmployees: 'Employees:',
+                statsWorkedDays: 'Worked days / wk:',
+                daySingular: 'day',
+                dayPlural: 'days',
+                fsSave: '💾 Save',
+                fsPrevWeek: '◀ Prev. wk',
+                fsNextWeek: 'Next wk ▶',
+                fsRotate: '↻ Rotate ±90°',
+                fsExit: '✕ Exit (ESC)',
+                colEmployee: 'Employee',
+                colEmployeeDetails: 'EMPLOYEE & DETAILS',
+                colDays: 'Days',
+                colDaysUpper: 'DAYS',
+                presentPerDay: 'Present / day',
+                noEmployeesTable: 'No employees added yet. Click <strong>+ Employee</strong> to get started.',
+                noEmployeesCanvas: 'No employees added for this week.',
+                removeEmployeeTitle: 'Remove employee',
+                setCellTitle: 'Click to set schedule',
+                days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                daysShort: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                shiftModalTitleDay: 'Schedule • {day}',
+                shiftModalSubtitle: '{name} ({date} {year})',
+                closeModalAria: 'Close',
+                quickPresetsLabel: 'Quickly pick start time or day status:',
+                presetWorkDesc: 'Working day',
+                presetExtraTitle: '{time} • Extra',
+                presetExtraDesc: 'Extra working day',
+                statusVrijLabel: 'Off',
+                presetVrijDesc: 'Day off (not counted as worked day)',
+                statusVakantieLabel: 'Vacation',
+                presetVakantieDesc: 'Vacation (not counted as worked day)',
+                customLabelField: 'Start time or status',
+                customLabelPlaceholder: 'E.g. 07:00, 08:00, 10:00, Off, Vacation',
+                customTypeField: 'Day type',
+                typeWorkOption: 'Working day',
+                typeExtraOption: 'Extra (additional)',
+                typeVrijOption: 'Off',
+                typeVakantieOption: 'Vacation',
+                customNoteField: 'Optional note (e.g. Extra, Group A)',
+                customNotePlaceholder: 'E.g. Extra',
+                deleteCellBtn: 'Delete',
+                addExtraDayBtn: '+ Add Extra day',
+                resetGroupWeekBtn: 'Reapply group schedule',
+                applyMonFriBtn: 'Apply Mon–Fri',
+                cancelBtn: 'Cancel',
+                saveBtn: 'Save',
+                addEmpModalTitle: 'Add New Employee',
+                addEmpModalSubtitle: 'Will appear immediately in the weekly table',
+                empNameLabel: 'Full Name *',
+                empNamePlaceholder: 'E.g. Alex Morgan',
+                empRoleLabel: 'Role / Group (optional)',
+                empRolePlaceholder: 'E.g. Group A, Group B, Group C...',
+                empDefaultRole: 'Employee',
+                addEmpSubmitBtn: 'Add to schedule',
+                shareModalTitle: 'Send Week & Schedule Image (.PNG)',
+                shareModalSubtitle: 'Week {week} ({range}) • Ready to share',
+                shareError: 'Could not generate PNG image of the table.',
+                shareHelperNative: 'Sends the selected week and the PNG schedule image via WhatsApp or Email.',
+                shareHelperFallback: 'Sends the selected week and the PNG schedule image.',
+                downloadPngBtn: '⬇ Download PNG',
+                copyImageBtn: '📋 Copy Image',
+                copyTextModalBtn: '📄 Copy Week',
+                waTextBtn: 'WhatsApp (Week)',
+                waImageBtn: 'WhatsApp (Image)',
+                mailImageBtn: 'Email',
+                closeBtn: 'Close',
+                canvasBannerTitle: 'WORK SCHEDULE • WEEK {week} ({range})',
+                canvasBannerStats: 'Employees: {count}   •   Total worked days: {days} days',
+                canvasLegendWork: 'Schedule (e.g. 07:00 / 08:00 / 10:00)',
+                canvasLegendExtra: 'Extra',
+                canvasLegendVrij: 'Off',
+                canvasLegendVakantie: 'Vacation',
+                shareTextTitle: 'WORK SCHEDULE - Week {week} ({range})',
+                shareTextDaysLine: 'Days: {daysLine}',
+                shareTextNoEmp: 'No employees in schedule for this week.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'Present / day: {presentLine}',
+                shareTextTotalLine: 'Total worked days this week: {days} days ({count} employees)',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
+                toastFirstWeek2026: 'Reached the first week of 2026.',
+                toastLastWeek2027: 'Reached the last week of 2027.',
+                toastWeek47: 'Showing Week 47 (16 – 22 November 2026).',
+                toastChangesSaved: 'All changes have been saved.',
+                toastShiftSaved: 'Daily schedule updated. Click "Save changes" to confirm.',
+                toastExtraDayAdded: 'Extra day added for {day}.',
+                toastGroupReapplied: 'Group schedule reapplied for this week.',
+                toastAppliedMonFri: 'Schedule applied to Monday – Friday.',
+                toastCellCleared: 'Cell cleared.',
+                toastEmpAdded: 'Employee {name} added.',
+                toastEmpRemoved: 'Employee removed from list.',
+                toastNoPrevWeek: 'No previous week available.',
+                toastPrevWeekEmpty: 'Week {week} has no saved shifts.',
+                toastWeekCopied: 'Copied schedule from Week {week}.',
+                toastTextCopied: 'Current week copied.',
+                toastTextCopyFail: 'Could not copy automatically; use WhatsApp or Email buttons.',
+                toastPngNotReady: 'PNG image could not be prepared.',
+                toastPngDownloaded: 'Image {filename} downloaded.',
+                toastPngOpenFail: 'Open the image from preview to save it.',
+                toastNoPng: 'No PNG image generated.',
+                toastImgCopied: 'Table image copied to clipboard!',
+                toastImgCopyFallback: 'PNG downloaded to attach.',
+                toastNoPngGen: 'Could not generate PNG image.',
+                toastSharedWa: 'Week and PNG image sent to WhatsApp.',
+                toastSharedMail: 'Week and PNG image sent to Email.',
+                toastShareCancelled: 'Sharing cancelled.',
+                toastOpenedWa: 'Week and PNG image prepared for WhatsApp.',
+                toastOpenedWaText: 'Week sent to WhatsApp.',
+                toastOpenedMail: 'Week sent to Email.',
+                toastFsActive: '90° fullscreen active • Press Back for main view.'
+            },
+            ru: {
+                pageTitle: 'График работы и смен (2026 и 2027)',
+                brandTitle: 'График работы',
+                brandSubtitle: 'Нажмите на ячейку для правки • Нажмите на заголовок для поворота на 90°',
+                brandTooltip: 'Нажмите, чтобы открыть график работы на весь экран с поворотом на 90°',
+                prevWeekTitle: 'Предыдущая неделя',
+                nextWeekTitle: 'Следующая неделя',
+                yearAria: 'Выберите год',
+                weekAria: 'Выберите неделю',
+                langAria: 'Выберите язык',
+                weekPrefix: 'Нед.',
+                week47Btn: 'Нед. 47',
+                week47Title: 'Перейти к неделе 47 (16–22 ноя 2026)',
+                saveChangesBtn: 'Сохранить изменения',
+                saveChangesPending: 'Сохранить изменения •',
+                saveChangesTitle: 'Сохранить все изменения в таблице',
+                addEmployeeBtn: '+ Сотрудник',
+                copyPrevWeekBtn: 'Копия пред. нед.',
+                copyPrevWeekTitle: 'Скопировать график с предыдущей недели',
+                fullscreen90Btn: 'Экран 90°',
+                fullscreen90Title: 'Полноэкранный режим с поворотом на 90°',
+                printBtn: 'Печать',
+                printTitle: 'Печать или сохранение в PDF',
+                legendWork: 'График (напр. 07:00 / 08:00 / 10:00)',
+                legendExtra: 'Extra',
+                legendVrij: 'Выходной',
+                legendVakantie: 'Отпуск',
+                whatsappBtn: 'WhatsApp',
+                whatsappTitle: 'Отправить неделю и картинку графика в WhatsApp',
+                emailBtn: 'Email',
+                emailTitle: 'Отправить неделю и картинку графика по Email',
+                copyTextBtn: 'Копировать',
+                copyTextTitle: 'Скопировать текущую неделю',
+                statsEmployees: 'Сотрудники:',
+                statsWorkedDays: 'Рабочих дней / нед.:',
+                daySingular: 'день',
+                dayPlural: 'дней',
+                fsSave: '💾 Сохранить',
+                fsPrevWeek: '◀ Пред. нед.',
+                fsNextWeek: 'След. нед. ▶',
+                fsRotate: '↻ Повернуть ±90°',
+                fsExit: '✕ Выход (ESC)',
+                colEmployee: 'Сотрудник',
+                colEmployeeDetails: 'СОТРУДНИК И ДЕТАЛИ',
+                colDays: 'Дни',
+                colDaysUpper: 'ДНИ',
+                presentPerDay: 'На смене / день',
+                noEmployeesTable: 'Сотрудники не добавлены. Нажмите <strong>+ Сотрудник</strong>, чтобы начать.',
+                noEmployeesCanvas: 'На эту неделю сотрудники не добавлены.',
+                removeEmployeeTitle: 'Удалить сотрудника',
+                setCellTitle: 'Нажмите, чтобы задать график',
+                days: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+                daysShort: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                monthsShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                shiftModalTitleDay: 'График • {day}',
+                shiftModalSubtitle: '{name} ({date} {year})',
+                closeModalAria: 'Закрыть',
+                quickPresetsLabel: 'Быстрый выбор времени начала или статуса дня:',
+                presetWorkDesc: 'Рабочий день',
+                presetExtraTitle: '{time} • Extra',
+                presetExtraDesc: 'Дополнительный рабочий день',
+                statusVrijLabel: 'Выходной',
+                presetVrijDesc: 'Выходной (не считается рабочим днём)',
+                statusVakantieLabel: 'Отпуск',
+                presetVakantieDesc: 'Отпуск (не считается рабочим днём)',
+                customLabelField: 'Время начала или статус',
+                customLabelPlaceholder: 'Напр.: 07:00, 08:00, 10:00, Выходной, Отпуск',
+                customTypeField: 'Тип дня',
+                typeWorkOption: 'Рабочий день',
+                typeExtraOption: 'Extra (доп.)',
+                typeVrijOption: 'Выходной',
+                typeVakantieOption: 'Отпуск',
+                customNoteField: 'Примечание (напр. Extra, Группа A)',
+                customNotePlaceholder: 'Напр.: Extra',
+                deleteCellBtn: 'Удалить',
+                addExtraDayBtn: '+ Добавить день Extra',
+                resetGroupWeekBtn: 'Вернуть график группы',
+                applyMonFriBtn: 'На Пн–Пт',
+                cancelBtn: 'Отмена',
+                saveBtn: 'Сохранить',
+                addEmpModalTitle: 'Добавить сотрудника',
+                addEmpModalSubtitle: 'Сразу появится в недельном графике',
+                empNameLabel: 'Имя и фамилия *',
+                empNamePlaceholder: 'Напр.: Иван Петров',
+                empRoleLabel: 'Должность / Группа (необязательно)',
+                empRolePlaceholder: 'Напр.: Группа A, Группа B...',
+                empDefaultRole: 'Сотрудник',
+                addEmpSubmitBtn: 'Добавить в график',
+                shareModalTitle: 'Отправить неделю и картинку (.PNG)',
+                shareModalSubtitle: 'Нед. {week} ({range}) • Готово к отправке',
+                shareError: 'Не удалось создать PNG-изображение таблицы.',
+                shareHelperNative: 'Отправляются выбранная неделя и PNG-картинка таблицы через WhatsApp или Email.',
+                shareHelperFallback: 'Отправляются выбранная неделя и PNG-картинка таблицы.',
+                downloadPngBtn: '⬇ Скачать PNG',
+                copyImageBtn: '📋 Копировать картинку',
+                copyTextModalBtn: '📄 Копировать неделю',
+                waTextBtn: 'WhatsApp (Неделя)',
+                waImageBtn: 'WhatsApp (Картинка)',
+                mailImageBtn: 'Email',
+                closeBtn: 'Закрыть',
+                canvasBannerTitle: 'ГРАФИК РАБОТЫ • НЕДЕЛЯ {week} ({range})',
+                canvasBannerStats: 'Сотрудников: {count}   •   Всего рабочих дней: {days} дн.',
+                canvasLegendWork: 'График (напр. 07:00 / 08:00 / 10:00)',
+                canvasLegendExtra: 'Extra',
+                canvasLegendVrij: 'Выходной',
+                canvasLegendVakantie: 'Отпуск',
+                shareTextTitle: 'ГРАФИК РАБОТЫ - Нед. {week} ({range})',
+                shareTextDaysLine: 'Дни: {daysLine}',
+                shareTextNoEmp: 'На эту неделю сотрудники не добавлены.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'На смене / день: {presentLine}',
+                shareTextTotalLine: 'Всего рабочих дней за неделю: {days} дн. (сотрудников: {count})',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
+                toastFirstWeek2026: 'Достигнута первая неделя 2026 года.',
+                toastLastWeek2027: 'Достигнута последняя неделя 2027 года.',
+                toastWeek47: 'Показана неделя 47 (16 – 22 ноября 2026).',
+                toastChangesSaved: 'Все изменения сохранены.',
+                toastShiftSaved: 'Дневной график обновлён. Нажмите «Сохранить изменения» для подтверждения.',
+                toastExtraDayAdded: 'День Extra добавлен на {day}.',
+                toastGroupReapplied: 'График группы повторно применён на эту неделю.',
+                toastAppliedMonFri: 'График применён с понедельника по пятницу.',
+                toastCellCleared: 'Ячейка очищена.',
+                toastEmpAdded: 'Сотрудник {name} добавлен.',
+                toastEmpRemoved: 'Сотрудник удалён из списка.',
+                toastNoPrevWeek: 'Предыдущая неделя недоступна.',
+                toastPrevWeekEmpty: 'В неделе {week} нет сохранённых смен.',
+                toastWeekCopied: 'График с недели {week} скопирован.',
+                toastTextCopied: 'Текущая неделя скопирована.',
+                toastTextCopyFail: 'Автокопирование недоступно; используйте WhatsApp или Email.',
+                toastPngNotReady: 'Не удалось подготовить PNG-изображение.',
+                toastPngDownloaded: 'Изображение {filename} скачано.',
+                toastPngOpenFail: 'Откройте изображение в предпросмотре, чтобы сохранить его.',
+                toastNoPng: 'PNG-изображение не создано.',
+                toastImgCopied: 'Изображение таблицы скопировано в буфер обмена!',
+                toastImgCopyFallback: 'PNG скачан для отправки.',
+                toastNoPngGen: 'Не удалось создать PNG-изображение.',
+                toastSharedWa: 'Неделя и PNG-картинка отправлены в WhatsApp.',
+                toastSharedMail: 'Неделя и PNG-картинка отправлены по Email.',
+                toastShareCancelled: 'Отправка отменена.',
+                toastOpenedWa: 'Неделя и PNG-картинка подготовлены для WhatsApp.',
+                toastOpenedWaText: 'Неделя отправлена в WhatsApp.',
+                toastOpenedMail: 'Неделя отправлена по Email.',
+                toastFsActive: 'Полноэкранный режим 90° активен • Нажмите Назад для возврата.'
+            },
+            tr: {
+                pageTitle: 'Çalışma Programı & Vardiyalar (2026 & 2027)',
+                brandTitle: 'Çalışma Programı',
+                brandSubtitle: 'Düzenlemek için hücreye tıklayın • 90° tam ekran için başlığa tıklayın',
+                brandTooltip: 'Çalışma Programını 90° döndürülmüş tam ekranda açmak için tıklayın',
+                prevWeekTitle: 'Önceki hafta',
+                nextWeekTitle: 'Sonraki hafta',
+                yearAria: 'Yıl seçin',
+                weekAria: 'Hafta seçin',
+                langAria: 'Dil seçin',
+                weekPrefix: 'Hafta',
+                week47Btn: 'Hafta 47',
+                week47Title: '47. Haftaya git (16–22 Kas 2026)',
+                saveChangesBtn: 'Değişiklikleri kaydet',
+                saveChangesPending: 'Değişiklikleri kaydet •',
+                saveChangesTitle: 'Tablodaki tüm değişiklikleri kaydet',
+                addEmployeeBtn: '+ Çalışan',
+                copyPrevWeekBtn: 'Önceki Haftayı Kopyala',
+                copyPrevWeekTitle: 'Önceki haftanın programını kopyala',
+                fullscreen90Btn: '90° Ekran',
+                fullscreen90Title: '90° döndürülmüş tam ekran görünümü',
+                printBtn: 'Yazdır',
+                printTitle: 'Yazdır veya PDF olarak kaydet',
+                legendWork: 'Program (örn. 07:00 / 08:00 / 10:00)',
+                legendExtra: 'Extra',
+                legendVrij: 'İzinli',
+                legendVakantie: 'Tatil',
+                whatsappBtn: 'WhatsApp',
+                whatsappTitle: 'Haftayı ve tablo görselini WhatsApp’ta paylaş',
+                emailBtn: 'E-posta',
+                emailTitle: 'Haftayı ve tablo görselini E-posta ile gönder',
+                copyTextBtn: 'Kopyala',
+                copyTextTitle: 'Mevcut haftayı kopyala',
+                statsEmployees: 'Çalışanlar:',
+                statsWorkedDays: 'Çalışılan gün / hf.:',
+                daySingular: 'gün',
+                dayPlural: 'gün',
+                fsSave: '💾 Kaydet',
+                fsPrevWeek: '◀ Önceki hf.',
+                fsNextWeek: 'Sonraki hf. ▶',
+                fsRotate: '↻ Döndür ±90°',
+                fsExit: '✕ Çıkış (ESC)',
+                colEmployee: 'Çalışan',
+                colEmployeeDetails: 'ÇALIŞAN & DETAYLAR',
+                colDays: 'Gün',
+                colDaysUpper: 'GÜN',
+                presentPerDay: 'Mevcut / gün',
+                noEmployeesTable: 'Henüz çalışan eklenmedi. Başlamak için <strong>+ Çalışan</strong> düğmesine tıklayın.',
+                noEmployeesCanvas: 'Bu hafta için çalışan eklenmedi.',
+                removeEmployeeTitle: 'Çalışanı kaldır',
+                setCellTitle: 'Programı ayarlamak için tıklayın',
+                days: ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'],
+                daysShort: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+                shiftModalTitleDay: 'Program • {day}',
+                shiftModalSubtitle: '{name} ({date} {year})',
+                closeModalAria: 'Kapat',
+                quickPresetsLabel: 'Başlangıç saatini veya gün durumunu hızlı seçin:',
+                presetWorkDesc: 'Çalışma günü',
+                presetExtraTitle: '{time} • Extra',
+                presetExtraDesc: 'Ek çalışma günü',
+                statusVrijLabel: 'İzinli',
+                presetVrijDesc: 'İzin günü (çalışılan gün sayılmaz)',
+                statusVakantieLabel: 'Tatil',
+                presetVakantieDesc: 'Tatil (çalışılan gün sayılmaz)',
+                customLabelField: 'Başlangıç saati veya durum',
+                customLabelPlaceholder: 'Örn: 07:00, 08:00, 10:00, İzinli, Tatil',
+                customTypeField: 'Gün türü',
+                typeWorkOption: 'Çalışma günü',
+                typeExtraOption: 'Extra (ek)',
+                typeVrijOption: 'İzinli',
+                typeVakantieOption: 'Tatil',
+                customNoteField: 'İsteğe bağlı not (örn. Extra, Grup A)',
+                customNotePlaceholder: 'Örn: Extra',
+                deleteCellBtn: 'Sil',
+                addExtraDayBtn: '+ Extra gün ekle',
+                resetGroupWeekBtn: 'Grup programını uygula',
+                applyMonFriBtn: 'Pzt–Cum uygula',
+                cancelBtn: 'İptal',
+                saveBtn: 'Kaydet',
+                addEmpModalTitle: 'Yeni Çalışan Ekle',
+                addEmpModalSubtitle: 'Haftalık tabloda hemen görünür',
+                empNameLabel: 'Ad Soyad *',
+                empNamePlaceholder: 'Örn: Ahmet Yılmaz',
+                empRoleLabel: 'Görev / Grup (isteğe bağlı)',
+                empRolePlaceholder: 'Örn: Grup A, Grup B, Grup C...',
+                empDefaultRole: 'Çalışan',
+                addEmpSubmitBtn: 'Programa ekle',
+                shareModalTitle: 'Haftayı ve Tablo Görselini Gönder (.PNG)',
+                shareModalSubtitle: 'Hafta {week} ({range}) • Paylaşıma hazır',
+                shareError: 'Tablonun PNG görseli oluşturulamadı.',
+                shareHelperNative: 'Seçilen hafta ve PNG tablo görseli WhatsApp veya E-posta ile gönderilir.',
+                shareHelperFallback: 'Seçilen hafta ve PNG tablo görseli gönderilir.',
+                downloadPngBtn: '⬇ PNG İndir',
+                copyImageBtn: '📋 Görseli Kopyala',
+                copyTextModalBtn: '📄 Haftayı Kopyala',
+                waTextBtn: 'WhatsApp (Hafta)',
+                waImageBtn: 'WhatsApp (Görsel)',
+                mailImageBtn: 'E-posta',
+                closeBtn: 'Kapat',
+                canvasBannerTitle: 'ÇALIŞMA PROGRAMI • HAFTA {week} ({range})',
+                canvasBannerStats: 'Çalışanlar: {count}   •   Toplam çalışılan gün: {days} gün',
+                canvasLegendWork: 'Program (örn. 07:00 / 08:00 / 10:00)',
+                canvasLegendExtra: 'Extra',
+                canvasLegendVrij: 'İzinli',
+                canvasLegendVakantie: 'Tatil',
+                shareTextTitle: 'ÇALIŞMA PROGRAMI - Hafta {week} ({range})',
+                shareTextDaysLine: 'Günler: {daysLine}',
+                shareTextNoEmp: 'Bu hafta için çalışan bulunmuyor.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'Mevcut / gün: {presentLine}',
+                shareTextTotalLine: 'Haftalık toplam çalışılan gün: {days} gün ({count} çalışan)',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
+                toastFirstWeek2026: '2026 yılının ilk haftasına ulaştınız.',
+                toastLastWeek2027: '2027 yılının son haftasına ulaştınız.',
+                toastWeek47: '47. Hafta gösteriliyor (16 – 22 Kasım 2026).',
+                toastChangesSaved: 'Tüm değişiklikler kaydedildi.',
+                toastShiftSaved: 'Günlük program güncellendi. Onaylamak için „Değişiklikleri kaydet“ düğmesine tıklayın.',
+                toastExtraDayAdded: '{day} için Extra gün eklendi.',
+                toastGroupReapplied: 'Bu hafta için grup programı yeniden uygulandı.',
+                toastAppliedMonFri: 'Program Pazartesi – Cuma günlerine uygulandı.',
+                toastCellCleared: 'Hücre temizlendi.',
+                toastEmpAdded: '{name} adlı çalışan eklendi.',
+                toastEmpRemoved: 'Çalışan listeden kaldırıldı.',
+                toastNoPrevWeek: 'Önceki hafta bulunamadı.',
+                toastPrevWeekEmpty: '{week}. haftada kayıtlı vardiya yok.',
+                toastWeekCopied: '{week}. haftanın programı kopyalandı.',
+                toastTextCopied: 'Mevcut hafta kopyalandı.',
+                toastTextCopyFail: 'Otomatik kopyalanamadı; WhatsApp veya E-posta düğmelerini kullanın.',
+                toastPngNotReady: 'PNG görseli hazırlanamadı.',
+                toastPngDownloaded: '{filename} görseli indirildi.',
+                toastPngOpenFail: 'Kaydetmek için önizlemeden görseli açın.',
+                toastNoPng: 'Oluşturulmuş PNG görseli yok.',
+                toastImgCopied: 'Tablo görseli panoya kopyalandı!',
+                toastImgCopyFallback: 'PNG eklemek için indirildi.',
+                toastNoPngGen: 'PNG görseli oluşturulamadı.',
+                toastSharedWa: 'Hafta ve PNG görseli WhatsApp’a gönderildi.',
+                toastSharedMail: 'Hafta ve PNG görseli E-postaya gönderildi.',
+                toastShareCancelled: 'Paylaşım iptal edildi.',
+                toastOpenedWa: 'Hafta ve PNG görseli WhatsApp için hazırlandı.',
+                toastOpenedWaText: 'Hafta WhatsApp’a gönderildi.',
+                toastOpenedMail: 'Hafta E-postaya gönderildi.',
+                toastFsActive: '90° tam ekran aktif • Ana görünüm için Geri tuşuna basın.'
+            },
+            nl: {
+                pageTitle: 'Werkrooster & Diensten (2026 & 2027)',
+                brandTitle: 'Werkrooster',
+                brandSubtitle: 'Klik op een cel om te bewerken • Klik op titel voor 90° volledig scherm',
+                brandTooltip: 'Klik om het werkrooster 90° gedraaid op volledig scherm te openen',
+                prevWeekTitle: 'Vorige week',
+                nextWeekTitle: 'Volgende week',
+                yearAria: 'Selecteer jaar',
+                weekAria: 'Selecteer week',
+                langAria: 'Selecteer taal',
+                weekPrefix: 'Week',
+                week47Btn: 'Week 47',
+                week47Title: 'Ga naar Week 47 (16–22 nov 2026)',
+                saveChangesBtn: 'Wijzigingen opslaan',
+                saveChangesPending: 'Wijzigingen opslaan •',
+                saveChangesTitle: 'Alle wijzigingen in de tabel opslaan',
+                addEmployeeBtn: '+ Medewerker',
+                copyPrevWeekBtn: 'Kopieer Vorige Wk',
+                copyPrevWeekTitle: 'Kopieer rooster van vorige week',
+                fullscreen90Btn: 'Scherm 90°',
+                fullscreen90Title: '90° gedraaide weergave op volledig scherm',
+                printBtn: 'Afdrukken',
+                printTitle: 'Afdrukken of opslaan als PDF',
+                legendWork: 'Rooster (bijv. 07:00 / 08:00 / 10:00)',
+                legendExtra: 'Extra',
+                legendVrij: 'Vrij',
+                legendVakantie: 'Vakantie',
+                whatsappBtn: 'WhatsApp',
+                whatsappTitle: 'Deel week en roosterafbeelding op WhatsApp',
+                emailBtn: 'E-mail',
+                emailTitle: 'Verstuur week en roosterafbeelding per e-mail',
+                copyTextBtn: 'Kopieer',
+                copyTextTitle: 'Kopieer huidige week',
+                statsEmployees: 'Medewerkers:',
+                statsWorkedDays: 'Gewerkte dagen / wk:',
+                daySingular: 'dag',
+                dayPlural: 'dagen',
+                fsSave: '💾 Opslaan',
+                fsPrevWeek: '◀ Vorige wk',
+                fsNextWeek: 'Volgende wk ▶',
+                fsRotate: '↻ Draai ±90°',
+                fsExit: '✕ Sluiten (ESC)',
+                colEmployee: 'Medewerker',
+                colEmployeeDetails: 'MEDEWERKER & DETAILS',
+                colDays: 'Dagen',
+                colDaysUpper: 'DAGEN',
+                presentPerDay: 'Aanwezig / dag',
+                noEmployeesTable: 'Nog geen medewerkers toegevoegd. Klik op <strong>+ Medewerker</strong> om te beginnen.',
+                noEmployeesCanvas: 'Geen medewerkers toegevoegd voor deze week.',
+                removeEmployeeTitle: 'Verwijder medewerker',
+                setCellTitle: 'Klik om rooster in te stellen',
+                days: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],
+                daysShort: ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'],
+                monthsShort: ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                shiftModalTitleDay: 'Rooster • {day}',
+                shiftModalSubtitle: '{name} ({date} {year})',
+                closeModalAria: 'Sluiten',
+                quickPresetsLabel: 'Kies snel een begintijd of dagstatus:',
+                presetWorkDesc: 'Werkdag',
+                presetExtraTitle: '{time} • Extra',
+                presetExtraDesc: 'Extra werkdag',
+                statusVrijLabel: 'Vrij',
+                presetVrijDesc: 'Vrije dag (telt niet als gewerkte dag)',
+                statusVakantieLabel: 'Vakantie',
+                presetVakantieDesc: 'Vakantie (telt niet als gewerkte dag)',
+                customLabelField: 'Begintijd of status',
+                customLabelPlaceholder: 'Bijv.: 07:00, 08:00, 10:00, Vrij, Vakantie',
+                customTypeField: 'Dagtype',
+                typeWorkOption: 'Werkdag',
+                typeExtraOption: 'Extra (aanvullend)',
+                typeVrijOption: 'Vrij',
+                typeVakantieOption: 'Vakantie',
+                customNoteField: 'Optionele notitie (bijv. Extra, Groep A)',
+                customNotePlaceholder: 'Bijv.: Extra',
+                deleteCellBtn: 'Verwijderen',
+                addExtraDayBtn: '+ Extra dag toevoegen',
+                resetGroupWeekBtn: 'Groepsrooster toepassen',
+                applyMonFriBtn: 'Pas toe Ma–Vr',
+                cancelBtn: 'Annuleren',
+                saveBtn: 'Opslaan',
+                addEmpModalTitle: 'Nieuwe Medewerker Toevoegen',
+                addEmpModalSubtitle: 'Verschijnt direct in het weekrooster',
+                empNameLabel: 'Voor- en achternaam *',
+                empNamePlaceholder: 'Bijv.: Jan de Vries',
+                empRoleLabel: 'Functie / Groep (optioneel)',
+                empRolePlaceholder: 'Bijv.: Groep A, Groep B, Groep C...',
+                empDefaultRole: 'Medewerker',
+                addEmpSubmitBtn: 'Toevoegen aan rooster',
+                shareModalTitle: 'Week & Roosterafbeelding Verzenden (.PNG)',
+                shareModalSubtitle: 'Week {week} ({range}) • Klaar om te delen',
+                shareError: 'Kon geen PNG-afbeelding van de tabel maken.',
+                shareHelperNative: 'De geselecteerde week en de PNG-afbeelding worden via WhatsApp of E-mail verzonden.',
+                shareHelperFallback: 'De geselecteerde week en de PNG-afbeelding worden verzonden.',
+                downloadPngBtn: '⬇ Download PNG',
+                copyImageBtn: '📋 Kopieer Afbeelding',
+                copyTextModalBtn: '📄 Kopieer Week',
+                waTextBtn: 'WhatsApp (Week)',
+                waImageBtn: 'WhatsApp (Afbeelding)',
+                mailImageBtn: 'E-mail',
+                closeBtn: 'Sluiten',
+                canvasBannerTitle: 'WERKROOSTER • WEEK {week} ({range})',
+                canvasBannerStats: 'Medewerkers: {count}   •   Totaal gewerkte dagen: {days} dagen',
+                canvasLegendWork: 'Rooster (bijv. 07:00 / 08:00 / 10:00)',
+                canvasLegendExtra: 'Extra',
+                canvasLegendVrij: 'Vrij',
+                canvasLegendVakantie: 'Vakantie',
+                shareTextTitle: 'WERKROOSTER - Week {week} ({range})',
+                shareTextDaysLine: 'Dagen: {daysLine}',
+                shareTextNoEmp: 'Geen medewerkers in het rooster voor deze week.',
+                shareTextEmpLine: '{idx}. {name}{role} — {days} {dayWord}',
+                shareTextPresentLine: 'Aanwezig / dag: {presentLine}',
+                shareTextTotalLine: 'Totaal gewerkte dagen deze week: {days} dagen ({count} medewerkers)',
+                shareAttachNote: '{title}',
+                shareMailBody: '{title}',
+                toastFirstWeek2026: 'Eerste week van 2026 bereikt.',
+                toastLastWeek2027: 'Laatste week van 2027 bereikt.',
+                toastWeek47: 'Week 47 weergegeven (16 – 22 november 2026).',
+                toastChangesSaved: 'Alle wijzigingen zijn opgeslagen.',
+                toastShiftSaved: 'Dagrooster bijgewerkt. Klik op „Wijzigingen opslaan“ om te bevestigen.',
+                toastExtraDayAdded: 'Extra dag toegevoegd voor {day}.',
+                toastGroupReapplied: 'Groepsrooster opnieuw toegepast voor deze week.',
+                toastAppliedMonFri: 'Rooster toegepast op maandag – vrijdag.',
+                toastCellCleared: 'Cel gewist.',
+                toastEmpAdded: 'Medewerker {name} toegevoegd.',
+                toastEmpRemoved: 'Medewerker uit de lijst verwijderd.',
+                toastNoPrevWeek: 'Geen vorige week beschikbaar.',
+                toastPrevWeekEmpty: 'Week {week} heeft geen opgeslagen diensten.',
+                toastWeekCopied: 'Rooster van week {week} gekopieerd.',
+                toastTextCopied: 'Huidige week gekopieerd.',
+                toastTextCopyFail: 'Automatisch kopiëren mislukt; gebruik WhatsApp of E-mail.',
+                toastPngNotReady: 'PNG-afbeelding kon niet worden voorbereid.',
+                toastPngDownloaded: 'Afbeelding {filename} gedownload.',
+                toastPngOpenFail: 'Open de afbeelding in het voorbeeld om deze op te slaan.',
+                toastNoPng: 'Geen PNG-afbeelding gegenereerd.',
+                toastImgCopied: 'Roosterafbeelding gekopieerd naar klembord!',
+                toastImgCopyFallback: 'PNG gedownload om bij te voegen.',
+                toastNoPngGen: 'Kon geen PNG-afbeelding genereren.',
+                toastSharedWa: 'Week en PNG-afbeelding verzonden naar WhatsApp.',
+                toastSharedMail: 'Week en PNG-afbeelding verzonden naar E-mail.',
+                toastShareCancelled: 'Delen geannuleerd.',
+                toastOpenedWa: 'Week en PNG-afbeelding voorbereid voor WhatsApp.',
+                toastOpenedWaText: 'Week verzonden naar WhatsApp.',
+                toastOpenedMail: 'Week verzonden naar E-mail.',
+                toastFsActive: '90° volledig scherm actief • Druk op Terug voor hoofdweergave.'
             }
         };
 
-        const ALL_VRIJ_WORDS = new Set(['LIBER', 'VRIJ', 'OFF', 'DAY OFF', 'FREI', 'ВЫХОДНОЙ', 'İZİNLİ']);
-        const ALL_VAKANTIE_WORDS = new Set(['VACANȚĂ', 'VACANTA', 'VAKANTIE', 'URLAUB', 'VACATION', 'ОТПУСК', 'TATIL', 'CO', 'CM']);
-        const ALL_DEFAULT_ROLES = new Set(['ANGAJAT', 'EMPLOYEE', 'MITARBEITER', 'СОТРУДНИК', 'ÇALIŞAN', 'MEDEWERKER']);
+        const ALL_VRIJ_WORDS = new Set(
+            Object.values(TRANSLATIONS).map(d => (d.statusVrijLabel || '').trim().toUpperCase())
+                .concat(['VRIJ', 'LIBER', 'OFF', 'DAY OFF'])
+                .filter(Boolean)
+        );
+
+        const ALL_VAKANTIE_WORDS = new Set(
+            Object.values(TRANSLATIONS).map(d => (d.statusVakantieLabel || '').trim().toUpperCase())
+                .concat(['VACANȚĂ', 'VACANTA', 'URLAUB', 'VACATION', 'ОТПУСК', 'TATIL', 'VAKANTIE', 'CO', 'CM'])
+                .filter(Boolean)
+        );
+
+        const ALL_DEFAULT_ROLES = new Set(
+            Object.values(TRANSLATIONS).map(d => (d.empDefaultRole || '').trim().toUpperCase())
+                .concat(['ANGAJAT', 'EMPLOYEE', 'MITARBEITER', 'СОТРУДНИК', 'ÇALIŞAN', 'MEDEWERKER'])
+                .filter(Boolean)
+        );
 
         const rawState = {
             year: 2026,
@@ -2207,7 +2997,7 @@
             if (!target || typeof target !== 'object') return target;
             if (target.__isReactiveProxy) return target;
 
-            return new Proxy(target, {
+            const proxy = new Proxy(target, {
                 get(obj, prop, receiver) {
                     if (prop === '__isReactiveProxy') return true;
                     const val = Reflect.get(obj, prop, receiver);
@@ -2234,13 +3024,15 @@
                     return ok;
                 }
             });
+
+            return proxy;
         }
 
         const state = createDeepReactiveProxy(rawState);
 
         function t(key, params = {}) {
-            const dict = TRANSLATIONS.ro;
-            let str = Object.prototype.hasOwnProperty.call(dict, key) ? dict[key] : key;
+            const dict = TRANSLATIONS[state.lang] || TRANSLATIONS.ro;
+            let str = Object.prototype.hasOwnProperty.call(dict, key) ? dict[key] : (TRANSLATIONS.ro[key] || key);
             Object.keys(params).forEach(paramKey => {
                 str = str.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(params[paramKey]));
             });
@@ -2248,11 +3040,15 @@
         }
 
         function getDayNames() {
-            return TRANSLATIONS.ro.days;
+            return (TRANSLATIONS[state.lang] || TRANSLATIONS.ro).days;
+        }
+
+        function getDayShortNames() {
+            return (TRANSLATIONS[state.lang] || TRANSLATIONS.ro).daysShort;
         }
 
         function getMonthShortNames() {
-            return TRANSLATIONS.ro.monthsShort;
+            return (TRANSLATIONS[state.lang] || TRANSLATIONS.ro).monthsShort;
         }
 
         function detectSlotKind(slot) {
@@ -2290,6 +3086,13 @@
         }
 
         function loadSavedMetaAndLanguage() {
+            const savedLang = safeGetStorage(LANG_STORAGE_KEY);
+            if (savedLang && Object.prototype.hasOwnProperty.call(TRANSLATIONS, savedLang)) {
+                state.lang = savedLang;
+            } else {
+                state.lang = 'ro';
+            }
+
             const savedMeta = safeGetStorage(META_STORAGE_KEY);
             if (savedMeta) {
                 try {
@@ -2305,10 +3108,296 @@
                             state.rotationClass = meta.rotationClass;
                         }
                     }
-                } catch (err) {}
+                } catch (err) {
+                    // Ignore malformed meta
+                }
+            }
+
+            const select = document.getElementById('lang-select');
+            if (select) select.value = state.lang;
+            document.documentElement.lang = state.lang;
+        }
+
+        function applyStaticTranslations() {
+            document.documentElement.lang = state.lang;
+            document.title = t('pageTitle');
+
+            const titleEl = document.querySelector('.brand-title');
+            if (titleEl) titleEl.textContent = t('brandTitle');
+
+            const subtitleEl = document.querySelector('.brand-subtitle');
+            if (subtitleEl) subtitleEl.textContent = t('brandSubtitle');
+
+            const brandTrigger = document.getElementById('brand-trigger-btn');
+            if (brandTrigger) brandTrigger.setAttribute('title', t('brandTooltip'));
+
+            const prevBtn = document.getElementById('prev-week-btn');
+            if (prevBtn) prevBtn.setAttribute('title', t('prevWeekTitle'));
+
+            const nextBtn = document.getElementById('next-week-btn');
+            if (nextBtn) nextBtn.setAttribute('title', t('nextWeekTitle'));
+
+            const yearSelect = document.getElementById('year-select');
+            if (yearSelect) yearSelect.setAttribute('aria-label', t('yearAria'));
+
+            const weekSelect = document.getElementById('week-select');
+            if (weekSelect) weekSelect.setAttribute('aria-label', t('weekAria'));
+
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) {
+                langSelect.value = state.lang;
+                langSelect.setAttribute('aria-label', t('langAria'));
+            }
+
+            const w47Btn = document.getElementById('week-47-btn');
+            if (w47Btn) {
+                w47Btn.textContent = t('week47Btn');
+                w47Btn.setAttribute('title', t('week47Title'));
+            }
+
+            const saveChangesBtn = document.getElementById('save-changes-btn');
+            if (saveChangesBtn) {
+                saveChangesBtn.setAttribute('title', t('saveChangesTitle'));
+                updateSaveButtonVisualState();
+            }
+
+            const addEmpBtn = document.getElementById('add-emp-btn');
+            if (addEmpBtn) {
+                const span = addEmpBtn.querySelector('span');
+                if (span) span.textContent = t('addEmployeeBtn');
+            }
+
+            const copyPrevBtn = document.getElementById('copy-prev-week-btn');
+            if (copyPrevBtn) {
+                const span = copyPrevBtn.querySelector('span');
+                if (span) span.textContent = t('copyPrevWeekBtn');
+                copyPrevBtn.setAttribute('title', t('copyPrevWeekTitle'));
+            }
+
+            const fs90Btn = document.getElementById('fullscreen-90-btn');
+            if (fs90Btn) {
+                const span = fs90Btn.querySelector('span');
+                if (span) span.textContent = t('fullscreen90Btn');
+                fs90Btn.setAttribute('title', t('fullscreen90Title'));
+            }
+
+            const printBtn = document.getElementById('print-btn');
+            if (printBtn) {
+                const span = printBtn.querySelector('span');
+                if (span) span.textContent = t('printBtn');
+                printBtn.setAttribute('title', t('printTitle'));
+            }
+
+            const legWork = document.getElementById('legend-work-text');
+            if (legWork) legWork.textContent = t('legendWork');
+            const legExtra = document.getElementById('legend-extra-text');
+            if (legExtra) legExtra.textContent = t('legendExtra');
+            const legVrij = document.getElementById('legend-vrij-text');
+            if (legVrij) legVrij.textContent = t('legendVrij');
+            const legVakantie = document.getElementById('legend-vakantie-text');
+            if (legVakantie) legVakantie.textContent = t('legendVakantie');
+
+            const waBtn = document.getElementById('share-wa-btn');
+            if (waBtn) {
+                const span = waBtn.querySelector('span');
+                if (span) span.textContent = t('whatsappBtn');
+                waBtn.setAttribute('title', t('whatsappTitle'));
+            }
+
+            const mailBtn = document.getElementById('share-email-btn');
+            if (mailBtn) {
+                const span = mailBtn.querySelector('span');
+                if (span) span.textContent = t('emailBtn');
+                mailBtn.setAttribute('title', t('emailTitle'));
+            }
+
+            const copyTextBtn = document.getElementById('copy-text-btn');
+            if (copyTextBtn) {
+                const span = copyTextBtn.querySelector('span');
+                if (span) span.textContent = t('copyTextBtn');
+                copyTextBtn.setAttribute('title', t('copyTextTitle'));
+            }
+
+            const statsBar = document.querySelector('.stats-bar');
+            if (statsBar) {
+                const spans = statsBar.querySelectorAll('span');
+                if (spans[0]) {
+                    const countVal = document.getElementById('stat-emp-count')?.textContent || '0';
+                    spans[0].innerHTML = `${t('statsEmployees')} <strong id="stat-emp-count">${countVal}</strong>`;
+                }
+                if (spans[1]) {
+                    const daysVal = document.getElementById('stat-total-days')?.textContent || `0 ${t('dayPlural')}`;
+                    spans[1].innerHTML = `${t('statsWorkedDays')} <strong id="stat-total-days">${daysVal}</strong>`;
+                }
+            }
+
+            const fsTitleSpan = document.querySelector('.fs-title-group > span:first-child');
+            if (fsTitleSpan) fsTitleSpan.textContent = t('brandTitle');
+
+            const fsSaveBtn = document.getElementById('fs-save-btn');
+            if (fsSaveBtn) fsSaveBtn.textContent = t('fsSave');
+            const fsWaBtn = document.getElementById('fs-wa-btn');
+            if (fsWaBtn) fsWaBtn.textContent = t('whatsappBtn');
+            const fsMailBtn = document.getElementById('fs-mail-btn');
+            if (fsMailBtn) fsMailBtn.textContent = t('emailBtn');
+            const fsPrevBtn = document.getElementById('fs-prev-btn');
+            if (fsPrevBtn) fsPrevBtn.textContent = t('fsPrevWeek');
+            const fsNextBtn = document.getElementById('fs-next-btn');
+            if (fsNextBtn) fsNextBtn.textContent = t('fsNextWeek');
+            const fsRotateBtn = document.getElementById('fs-rotate-btn');
+            if (fsRotateBtn) fsRotateBtn.textContent = t('fsRotate');
+            const fsExitBtn = document.getElementById('fs-exit-btn');
+            if (fsExitBtn) fsExitBtn.textContent = t('fsExit');
+
+            const shiftModal = document.getElementById('shift-modal');
+            if (shiftModal) {
+                const closeBtn = document.getElementById('close-shift-modal-btn');
+                if (closeBtn) closeBtn.setAttribute('aria-label', t('closeModalAria'));
+
+                const presetHeader = document.getElementById('quick-presets-label');
+                if (presetHeader) presetHeader.textContent = t('quickPresetsLabel');
+
+                const presetBtns = shiftModal.querySelectorAll('.preset-btn');
+                const presetTimes = ['07:00', '08:00', '09:00', '10:00'];
+                for (let i = 0; i < 4; i++) {
+                    if (presetBtns[i]) {
+                        presetBtns[i].innerHTML = `<strong>${presetTimes[i]}</strong><span>${t('presetWorkDesc')}</span>`;
+                    }
+                }
+                if (presetBtns[4]) presetBtns[4].innerHTML = `<strong>${t('presetExtraTitle', { time: '07:00' })}</strong><span>${t('presetExtraDesc')}</span>`;
+                if (presetBtns[5]) presetBtns[5].innerHTML = `<strong>${t('presetExtraTitle', { time: '08:00' })}</strong><span>${t('presetExtraDesc')}</span>`;
+                if (presetBtns[6]) {
+                    presetBtns[6].setAttribute('data-preset-label', t('statusVrijLabel'));
+                    presetBtns[6].innerHTML = `<strong>${escapeHTML(t('statusVrijLabel'))}</strong><span>${t('presetVrijDesc')}</span>`;
+                }
+                if (presetBtns[7]) {
+                    presetBtns[7].setAttribute('data-preset-label', t('statusVakantieLabel'));
+                    presetBtns[7].innerHTML = `<strong>${escapeHTML(t('statusVakantieLabel'))}</strong><span>${t('presetVakantieDesc')}</span>`;
+                }
+
+                const labels = shiftModal.querySelectorAll('.form-group label');
+                if (labels[0]) labels[0].textContent = t('customLabelField');
+                if (labels[1]) labels[1].textContent = t('customTypeField');
+                if (labels[2]) labels[2].textContent = t('customNoteField');
+
+                const customLabelInput = document.getElementById('custom-label');
+                if (customLabelInput) customLabelInput.setAttribute('placeholder', t('customLabelPlaceholder'));
+
+                const customNoteInput = document.getElementById('custom-note');
+                if (customNoteInput) customNoteInput.setAttribute('placeholder', t('customNotePlaceholder'));
+
+                const typeSelect = document.getElementById('custom-status-type');
+                if (typeSelect) {
+                    const opts = typeSelect.querySelectorAll('option');
+                    if (opts[0]) opts[0].textContent = t('typeWorkOption');
+                    if (opts[1]) opts[1].textContent = t('typeExtraOption');
+                    if (opts[2]) opts[2].textContent = t('typeVrijOption');
+                    if (opts[3]) opts[3].textContent = t('typeVakantieOption');
+                }
+
+                const clearCellBtn = document.getElementById('clear-cell-btn');
+                if (clearCellBtn) clearCellBtn.textContent = t('deleteCellBtn');
+                const addExtraDayBtn = document.getElementById('add-extra-day-btn');
+                if (addExtraDayBtn) addExtraDayBtn.textContent = t('addExtraDayBtn');
+                const resetGroupWeekBtn = document.getElementById('reset-group-week-btn');
+                if (resetGroupWeekBtn) resetGroupWeekBtn.textContent = t('resetGroupWeekBtn');
+                const applyMonFriBtn = document.getElementById('apply-mon-fri-btn');
+                if (applyMonFriBtn) applyMonFriBtn.textContent = t('applyMonFriBtn');
+                const cancelShiftBtn = document.getElementById('cancel-shift-btn');
+                if (cancelShiftBtn) cancelShiftBtn.textContent = t('cancelBtn');
+                const saveShiftBtn = document.getElementById('save-shift-btn');
+                if (saveShiftBtn) saveShiftBtn.textContent = t('saveBtn');
+
+                if (state.editingCell) {
+                    const emp = state.employees.find(e => e.id === state.editingCell.empId);
+                    const days = getDatesOfISOWeek(state.year, state.week);
+                    if (emp) {
+                        document.getElementById('shift-modal-title').textContent = t('shiftModalTitleDay', { day: getDayNames()[state.editingCell.dayIndex] });
+                        document.getElementById('shift-modal-subtitle').textContent = t('shiftModalSubtitle', {
+                            name: emp.name,
+                            date: formatShortDate(days[state.editingCell.dayIndex]),
+                            year: state.year
+                        });
+                    }
+                    const weekKey = getWeekKey(state.year, state.week);
+                    const currentSlot = state.schedules[weekKey]?.[state.editingCell.empId]?.[state.editingCell.dayIndex];
+                    if (currentSlot && currentSlot.label) {
+                        document.getElementById('custom-label').value = getLocalizedSlotLabel(currentSlot);
+                    }
+                }
+            }
+
+            const empModal = document.getElementById('emp-modal');
+            if (empModal) {
+                const closeBtn = document.getElementById('close-emp-modal-btn');
+                if (closeBtn) closeBtn.setAttribute('aria-label', t('closeModalAria'));
+
+                const title = document.getElementById('add-emp-title');
+                if (title) title.textContent = t('addEmpModalTitle');
+                const sub = document.getElementById('add-emp-subtitle');
+                if (sub) sub.textContent = t('addEmpModalSubtitle');
+
+                const labels = empModal.querySelectorAll('.form-group label');
+                if (labels[0]) labels[0].textContent = t('empNameLabel');
+                if (labels[1]) labels[1].textContent = t('empRoleLabel');
+
+                const nameInput = document.getElementById('new-emp-name');
+                if (nameInput) nameInput.setAttribute('placeholder', t('empNamePlaceholder'));
+                const roleInput = document.getElementById('new-emp-role');
+                if (roleInput) roleInput.setAttribute('placeholder', t('empRolePlaceholder'));
+
+                const cancelEmpBtn = document.getElementById('cancel-emp-btn');
+                if (cancelEmpBtn) cancelEmpBtn.textContent = t('cancelBtn');
+                const submitEmpBtn = document.getElementById('submit-emp-btn');
+                if (submitEmpBtn) submitEmpBtn.textContent = t('addEmpSubmitBtn');
+            }
+
+            const shareModal = document.getElementById('share-image-modal');
+            if (shareModal) {
+                const closeBtn = document.getElementById('close-share-modal-btn');
+                if (closeBtn) closeBtn.setAttribute('aria-label', t('closeModalAria'));
+
+                const title = document.getElementById('share-image-modal-title');
+                if (title) title.textContent = t('shareModalTitle');
+
+                const dlBtn = document.getElementById('download-png-btn');
+                if (dlBtn) dlBtn.textContent = t('downloadPngBtn');
+
+                const cpBtn = document.getElementById('copy-png-btn');
+                if (cpBtn) cpBtn.textContent = t('copyImageBtn');
+
+                const cpTextBtn = document.getElementById('modal-copy-text-btn');
+                if (cpTextBtn) cpTextBtn.textContent = t('copyTextModalBtn');
+
+                const waTextBtn = document.getElementById('modal-wa-text-btn');
+                if (waTextBtn) waTextBtn.textContent = t('waTextBtn');
+
+                const waImgBtn = document.getElementById('modal-wa-image-btn');
+                if (waImgBtn) waImgBtn.textContent = t('waImageBtn');
+
+                const mailImgBtn = document.getElementById('modal-mail-image-btn');
+                if (mailImgBtn) mailImgBtn.textContent = t('mailImageBtn');
+
+                const closeFooterBtn = document.getElementById('close-share-footer-btn');
+                if (closeFooterBtn) closeFooterBtn.textContent = t('closeBtn');
             }
         }
 
+        function onLanguageChange(newLang) {
+            if (!newLang || !Object.prototype.hasOwnProperty.call(TRANSLATIONS, newLang)) return;
+            state.lang = newLang;
+            saveAppState();
+            applyStaticTranslations();
+            populateWeekDropdown();
+            renderScheduleTable();
+            if (document.getElementById('share-image-modal').classList.contains('open')) {
+                openShareImageModal(null);
+            }
+        }
+
+        /* =====================================================================
+           3. ISO CALENDAR UTILITIES (2026 & 2027)
+           ===================================================================== */
         function getISOWeekInfo(date) {
             const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
             const dayNum = d.getUTCDay() || 7;
@@ -2360,6 +3449,9 @@
             return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
         }
 
+        /* =====================================================================
+           4. GROUP ROTATION SCHEDULE FROM SHEET & MANUAL OVERRIDE SUPPORT
+           ===================================================================== */
         function createSlot(type, label, note = '') {
             return { type, label, note };
         }
@@ -2591,7 +3683,9 @@
                         markPendingSave(false);
                         return;
                     }
-                } catch (err) {}
+                } catch (err) {
+                    // Fallback to default state
+                }
             }
 
             state.employees = defaultEmployees;
@@ -2606,6 +3700,9 @@
             persistEverythingNow();
         }
 
+        /* =====================================================================
+           5. WEEK & YEAR NAVIGATION
+           ===================================================================== */
         function populateWeekDropdown() {
             const yearSelect = document.getElementById('year-select');
             const weekSelect = document.getElementById('week-select');
@@ -2683,6 +3780,9 @@
             showToast(t('toastWeek47'));
         }
 
+        /* =====================================================================
+           6. TABLE RENDERING
+           ===================================================================== */
         function escapeHTML(str) {
             return String(str)
                 .replace(/&/g, '&amp;')
@@ -2827,6 +3927,9 @@
             updateSaveButtonVisualState();
         }
 
+        /* =====================================================================
+           7. SHIFT MODAL, EXTRA DAY & EMPLOYEE MANAGEMENT
+           ===================================================================== */
         function openShiftModal(empId, dayIndex) {
             const emp = state.employees.find(e => e.id === empId);
             if (!emp) return;
@@ -3091,7 +4194,7 @@
         }
 
         /* =====================================================================
-           8. SHARE TEXT, CANVAS PNG RENDERING & WHATSAPP / EMAIL (NO whatsapp://)
+           8. WEEK-ONLY SHARE TEXT, CANVAS PNG RENDERING & WHATSAPP / EMAIL SHARE
            ===================================================================== */
         function buildScheduleShareText() {
             const days = getDatesOfISOWeek(state.year, state.week);
@@ -3143,26 +4246,75 @@
             return copied;
         }
 
-        function openExternalHttpUrl(url) {
+        function isAndroidWebView() {
+            const ua = (navigator.userAgent || '').toLowerCase();
+            return ua.includes('wv') || (ua.includes('android') && ua.includes('version/'));
+        }
+
+        function triggerAnchorNavigation(url, newTab = false) {
             try {
-                window.location.assign(url);
+                const a = document.createElement('a');
+                a.href = url;
+                if (newTab) {
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                }
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
                 return true;
             } catch (err) {
-                try {
-                    window.location.href = url;
-                    return true;
-                } catch (err2) {
-                    return false;
-                }
+                return false;
             }
         }
 
-        async function shareScheduleTextOnWhatsApp() {
-            const weekOnlyText = buildScheduleShareText();
+        async function openWhatsAppWithTextSafe(title, weekLabelText) {
             await copyScheduleTextToClipboard(true);
-            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(weekOnlyText)}`;
-            openExternalHttpUrl(waUrl);
+
+            if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+                try {
+                    await navigator.share({
+                        title: title,
+                        text: weekLabelText
+                    });
+                    showToast(t('toastOpenedWaText'));
+                    return;
+                } catch (err) {
+                    if (err && err.name === 'AbortError') {
+                        showToast(t('toastShareCancelled'));
+                        return;
+                    }
+                }
+            }
+
+            const encodedText = encodeURIComponent(weekLabelText);
+
+            if (isAndroidWebView() || /android/i.test(navigator.userAgent || '')) {
+                const fallbackWaWeb = encodeURIComponent(`https://wa.me/?text=${encodedText}`);
+                const androidIntentUrl = `intent://send?text=${encodedText}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${fallbackWaWeb};end`;
+                if (triggerAnchorNavigation(androidIntentUrl, false)) {
+                    showToast(t('toastOpenedWaText'));
+                    return;
+                }
+            }
+
+            const waUrl = `https://wa.me/?text=${encodedText}`;
+            const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
+            if (!win) {
+                triggerAnchorNavigation(waUrl, true);
+            }
             showToast(t('toastOpenedWaText'));
+        }
+
+        async function shareScheduleTextOnWhatsApp() {
+            const days = getDatesOfISOWeek(state.year, state.week);
+            const weekNumStr = String(state.week).padStart(2, '0');
+            const rangeStr = `${formatShortDate(days[0])} – ${formatShortDate(days[6])} ${state.year}`;
+            const title = t('shareTextTitle', { week: weekNumStr, range: rangeStr });
+            const weekOnlyText = buildScheduleShareText();
+
+            await openWhatsAppWithTextSafe(title, weekOnlyText);
         }
 
         function getSlotColors(kind) {
@@ -3506,7 +4658,7 @@
                     return null;
                 }
 
-                const filename = `program-munca-${state.year}-W${weekNumStr}.png`;
+                const filename = `program-munca-${state.year}-W${weekNumStr}-${state.lang}.png`;
                 state.lastPngDataUrl = dataUrl;
                 state.lastPngFilename = filename;
 
@@ -3550,7 +4702,7 @@
             document.getElementById('share-image-modal').classList.add('open');
 
             if (preferredChannel === 'whatsapp') {
-                shareScheduleTextOnWhatsApp();
+                shareRenderedScheduleImage('whatsapp');
             } else if (preferredChannel === 'email') {
                 shareRenderedScheduleImage('email');
             }
@@ -3604,7 +4756,9 @@
                     showToast(t('toastImgCopied'));
                     return;
                 }
-            } catch (err) {}
+            } catch (err) {
+                // Fallback to download
+            }
 
             downloadRenderedSchedulePNG();
             showToast(t('toastImgCopyFallback'));
@@ -3618,39 +4772,56 @@
             const title = t('shareTextTitle', { week: weekNumStr, range: rangeStr });
             const weekOnlyText = buildScheduleShareText();
 
-            if (channel === 'whatsapp') {
-                if (rendered && rendered.blob && typeof navigator !== 'undefined' && typeof navigator.share === 'function' && typeof File !== 'undefined') {
-                    try {
-                        const pngFile = new File([rendered.blob], rendered.filename, { type: 'image/png' });
-                        if (!navigator.canShare || navigator.canShare({ files: [pngFile] })) {
-                            await navigator.share({
-                                title: title,
-                                text: weekOnlyText,
-                                files: [pngFile]
-                            });
-                            showToast(t('toastSharedWa'));
-                            return;
-                        }
-                    } catch (err) {
-                        if (err && err.name === 'AbortError') {
-                            showToast(t('toastShareCancelled'));
-                            return;
-                        }
+            // Trimite săptămâna + imaginea PNG a tabelului
+            if (rendered && rendered.blob && typeof navigator !== 'undefined' && typeof navigator.share === 'function' && typeof File !== 'undefined') {
+                try {
+                    const pngFile = new File([rendered.blob], rendered.filename, { type: 'image/png' });
+                    if (!navigator.canShare || navigator.canShare({ files: [pngFile] })) {
+                        await navigator.share({
+                            title: title,
+                            text: weekOnlyText,
+                            files: [pngFile]
+                        });
+                        showToast(channel === 'whatsapp' ? t('toastSharedWa') : t('toastSharedMail'));
+                        return;
+                    }
+                } catch (err) {
+                    if (err && err.name === 'AbortError') {
+                        showToast(t('toastShareCancelled'));
+                        return;
                     }
                 }
-
-                downloadRenderedSchedulePNG();
-                await copyScheduleTextToClipboard(true);
-                openExternalHttpUrl(`https://api.whatsapp.com/send?text=${encodeURIComponent(weekOnlyText)}`);
-                showToast(t('toastOpenedWa'));
-                return;
             }
 
-            const mailtoUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(weekOnlyText)}`;
-            openExternalHttpUrl(mailtoUrl);
-            showToast(t('toastOpenedMail'));
+            // Fallback nativ: doar eticheta săptămânii
+            if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+                try {
+                    await navigator.share({
+                        title: title,
+                        text: weekOnlyText
+                    });
+                    showToast(channel === 'whatsapp' ? t('toastOpenedWaText') : t('toastOpenedMail'));
+                    return;
+                } catch (err) {
+                    if (err && err.name === 'AbortError') {
+                        showToast(t('toastShareCancelled'));
+                        return;
+                    }
+                }
+            }
+
+            if (channel === 'whatsapp') {
+                await openWhatsAppWithTextSafe(title, weekOnlyText);
+            } else {
+                const mailtoUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(weekOnlyText)}`;
+                triggerAnchorNavigation(mailtoUrl, false);
+                showToast(t('toastOpenedMail'));
+            }
         }
 
+        /* =====================================================================
+           9. 90-DEGREE FULLSCREEN MODE & PORTALS
+           ===================================================================== */
         function syncPortalsToFullscreenStage(intoStage) {
             const stage = document.getElementById('fullscreen-rotated-stage');
             const shiftModal = document.getElementById('shift-modal');
@@ -3697,9 +4868,15 @@
         function exitFullscreenSchedule(fromPopState = false) {
             if (!state.isFullscreen) return;
 
-            if (document.getElementById('shift-modal').classList.contains('open')) closeShiftModal();
-            if (document.getElementById('emp-modal').classList.contains('open')) closeAddEmployeeModal();
-            if (document.getElementById('share-image-modal').classList.contains('open')) closeShareImageModal();
+            if (document.getElementById('shift-modal').classList.contains('open')) {
+                closeShiftModal();
+            }
+            if (document.getElementById('emp-modal').classList.contains('open')) {
+                closeAddEmployeeModal();
+            }
+            if (document.getElementById('share-image-modal').classList.contains('open')) {
+                closeShareImageModal();
+            }
 
             const hadPushedState = state.pushedFullscreenState;
             state.isFullscreen = false;
@@ -3713,7 +4890,9 @@
             if (!fromPopState && hadPushedState) {
                 try {
                     window.history.back();
-                } catch (err) {}
+                } catch (err) {
+                    // Ignore history errors
+                }
             }
         }
 
@@ -3725,6 +4904,9 @@
             saveAppState();
         }
 
+        /* =====================================================================
+           10. TOASTS, EVENT BINDING & BOOTSTRAP
+           ===================================================================== */
         function showToast(message) {
             const container = document.getElementById('toast-container');
             const el = document.createElement('div');
@@ -3745,12 +4927,7 @@
             document.getElementById('year-select').addEventListener('change', onYearChange);
             document.getElementById('week-select').addEventListener('change', onWeekChange);
             document.getElementById('week-47-btn').addEventListener('click', goToWeek47);
-            document.getElementById('lang-select').addEventListener('change', (e) => {
-                state.lang = e.target.value || 'ro';
-                saveAppState();
-                populateWeekDropdown();
-                renderScheduleTable();
-            });
+            document.getElementById('lang-select').addEventListener('change', (e) => onLanguageChange(e.target.value));
 
             document.getElementById('save-changes-btn').addEventListener('click', commitChangesExplicitly);
             document.getElementById('add-emp-btn').addEventListener('click', openAddEmployeeModal);
@@ -3776,6 +4953,7 @@
                 }
             });
 
+            // Delegated click handling for table shift cells and employee delete buttons
             document.getElementById('table-body').addEventListener('click', (e) => {
                 const delBtn = e.target.closest('[data-delete-emp]');
                 if (delBtn) {
@@ -3794,6 +4972,7 @@
                 }
             });
 
+            // Shift modal controls
             document.getElementById('shift-modal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) closeShiftModal();
             });
@@ -3814,6 +4993,7 @@
                 });
             });
 
+            // Add employee modal controls
             document.getElementById('emp-modal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) closeAddEmployeeModal();
             });
@@ -3821,6 +5001,7 @@
             document.getElementById('cancel-emp-btn').addEventListener('click', closeAddEmployeeModal);
             document.getElementById('add-emp-form').addEventListener('submit', submitNewEmployee);
 
+            // Share image modal controls
             document.getElementById('share-image-modal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) closeShareImageModal();
             });
@@ -3910,11 +5091,13 @@
             loadAppState();
             loadSavedMetaAndLanguage();
             bindEvents();
+            applyStaticTranslations();
             populateWeekDropdown();
             renderScheduleTable();
             hydrateFromIndexedDBIfNeeded(() => {
                 loadAppState();
                 loadSavedMetaAndLanguage();
+                applyStaticTranslations();
                 populateWeekDropdown();
                 renderScheduleTable();
             });
@@ -3928,3 +5111,4 @@
     </script>
 </body>
 </html>
+
