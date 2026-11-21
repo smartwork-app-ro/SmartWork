@@ -4246,11 +4246,6 @@
             return copied;
         }
 
-        function isAndroidWebView() {
-            const ua = (navigator.userAgent || '').toLowerCase();
-            return ua.includes('wv') || (ua.includes('android') && ua.includes('version/'));
-        }
-
         function triggerAnchorNavigation(url, newTab = false) {
             try {
                 const a = document.createElement('a');
@@ -4289,17 +4284,7 @@
             }
 
             const encodedText = encodeURIComponent(weekLabelText);
-
-            if (isAndroidWebView() || /android/i.test(navigator.userAgent || '')) {
-                const fallbackWaWeb = encodeURIComponent(`https://wa.me/?text=${encodedText}`);
-                const androidIntentUrl = `intent://send?text=${encodedText}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${fallbackWaWeb};end`;
-                if (triggerAnchorNavigation(androidIntentUrl, false)) {
-                    showToast(t('toastOpenedWaText'));
-                    return;
-                }
-            }
-
-            const waUrl = `https://wa.me/?text=${encodedText}`;
+            const waUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
             const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
             if (!win) {
                 triggerAnchorNavigation(waUrl, true);
