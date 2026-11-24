@@ -1867,7 +1867,7 @@
         /* =====================================================================
            1. MULTI-LAYER PERSISTENT STORAGE (LOCALSTORAGE + INDEXEDDB + WINDOW.NAME)
            ===================================================================== */
-        const STORAGE_KEY = 'planificator_program_o_tura_2026_2027_v6';
+        const STORAGE_KEY = 'planificator_program_o_tura_2026_2027_v7';
         const LANG_STORAGE_KEY = 'planificator_program_lang_2026_2027_v1';
         const META_STORAGE_KEY = 'planificator_program_meta_2026_2027_v1';
         const IDB_DB_NAME = 'PlanificatorProgramDB_2026_2027';
@@ -3512,6 +3512,62 @@
             53: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB']
         };
 
+        /* Programul exact pentru 2027 (Săptămânile 1 - 52) conform tabelului din imagine */
+        const SHEET_PAIR_ROTATION_2027 = {
+            1:  ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            2:  ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            3:  ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            4:  ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            5:  ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            6:  ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            7:  ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            8:  ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            9:  ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            10: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            11: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            12: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            13: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            14: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            15: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            16: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            17: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            18: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            19: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            20: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            21: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            22: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            23: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            24: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            25: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            26: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            27: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            28: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            29: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            30: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            31: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            32: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            33: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            34: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            35: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            36: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            37: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            38: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            39: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            40: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            41: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            42: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            43: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            44: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            45: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            46: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC'],
+            47: ['AC', 'AB', 'AB', 'BC', 'BC', 'AC', 'AC'],
+            48: ['AB', 'AB', 'BC', 'BC', 'AC', 'AC', 'AB'],
+            49: ['AB', 'BC', 'BC', 'AC', 'AC', 'AB', 'AB'],
+            50: ['BC', 'BC', 'AC', 'AC', 'AB', 'AB', 'BC'],
+            51: ['BC', 'AC', 'AC', 'AB', 'AB', 'BC', 'BC'],
+            52: ['AC', 'AC', 'AB', 'AB', 'BC', 'BC', 'AC']
+        };
+
         function extractGroupLetter(role) {
             if (!role) return null;
             const normalized = role.trim().toUpperCase();
@@ -3530,6 +3586,9 @@
         function getDayPairsForYearWeek(year, week) {
             if (year === 2026 && SHEET_PAIR_ROTATION_2026[week]) {
                 return SHEET_PAIR_ROTATION_2026[week];
+            }
+            if (year === 2027 && SHEET_PAIR_ROTATION_2027[week]) {
+                return SHEET_PAIR_ROTATION_2027[week];
             }
             const refMonday = new Date(Date.UTC(2025, 11, 29));
             const days = getDatesOfISOWeek(year, week);
@@ -3582,7 +3641,8 @@
                     return;
                 }
 
-                const baseGroupSched = buildGroupScheduleForWeek(grp, year, week, '07:00');
+                const defaultStart = emp.id === 'emp_iulian' ? '08:00' : '07:00';
+                const baseGroupSched = buildGroupScheduleForWeek(grp, year, week, defaultStart);
                 const overrides = state.manualOverrides?.[weekKey]?.[emp.id] || {};
                 for (let d = 0; d < 7; d++) {
                     if (!overrides[d] && !state.schedules[weekKey][emp.id][d]) {
@@ -3646,6 +3706,44 @@
                 }
 
                 schedules[wkKey] = weekMap;
+            }
+
+            /* Pre-populare completă pentru anul 2027 (Săptămânile 1 - 52) conform imaginii */
+            for (let w = 1; w <= 52; w++) {
+                const wkKey = getWeekKey(2027, w);
+                schedules[wkKey] = {
+                    emp_daniel: {
+                        0: createSlot('work', '07:00'),
+                        1: createSlot('work', '07:00'),
+                        2: createSlot('work', '07:00'),
+                        3: createSlot('work', '07:00'),
+                        4: createSlot('work', '07:00'),
+                        5: createSlot('vrij', 'Liber'),
+                        6: createSlot('vrij', 'Liber')
+                    },
+                    emp_druvis: {
+                        0: createSlot('vrij', 'Liber'),
+                        1: createSlot('work', '07:00'),
+                        2: createSlot('work', '07:00'),
+                        3: createSlot('work', '07:00'),
+                        4: createSlot('work', '07:00'),
+                        5: createSlot('work', '07:00'),
+                        6: createSlot('vrij', 'Liber')
+                    },
+                    emp_ghenadie: {
+                        0: createSlot('work', '10:00'),
+                        1: createSlot('work', '10:00'),
+                        2: createSlot('work', '10:00'),
+                        3: createSlot('work', '10:00'),
+                        4: createSlot('work', '10:00'),
+                        5: createSlot('vrij', 'Liber'),
+                        6: createSlot('vrij', 'Liber')
+                    },
+                    emp_evelina: buildGroupScheduleForWeek('A', 2027, w, '07:00'),
+                    emp_andrei: buildGroupScheduleForWeek('B', 2027, w, '07:00'),
+                    emp_albert: buildGroupScheduleForWeek('C', 2027, w, '07:00'),
+                    emp_iulian: buildGroupScheduleForWeek('A', 2027, w, '08:00')
+                };
             }
 
             return schedules;
@@ -4066,7 +4164,8 @@
             const weekKey = getWeekKey(state.year, state.week);
             clearManualOverridesForEmpWeek(weekKey, empId);
             if (!state.schedules[weekKey]) state.schedules[weekKey] = {};
-            state.schedules[weekKey][empId] = buildGroupScheduleForWeek(grp, state.year, state.week, '07:00');
+            const defaultStart = emp.id === 'emp_iulian' ? '08:00' : '07:00';
+            state.schedules[weekKey][empId] = buildGroupScheduleForWeek(grp, state.year, state.week, defaultStart);
             markPendingSave(true);
             saveAppState();
             closeShiftModal();
@@ -5111,4 +5210,3 @@
     </script>
 </body>
 </html>
-
