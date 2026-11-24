@@ -233,6 +233,47 @@
             --shadow-xl: 0 20px 35px -10px rgba(15, 23, 42, 0.25);
         }
 
+        /* =====================================================================
+           DARK THEME (FUNDAL NEGRU ACTIVAT DE BUTONUL LUNĂ)
+           ===================================================================== */
+        html.dark-theme {
+            --bg-body: #000000;
+            --bg-card: #0a0a0a;
+            --bg-subtle: #141414;
+            --border-color: #262626;
+            --border-strong: #404040;
+            --text-main: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --indigo-50: #1e1b4b;
+            --indigo-100: #2e2a6e;
+            --indigo-200: #4338ca;
+            --indigo-600: #6366f1;
+            --indigo-700: #4f46e5;
+
+            --amber-50: #271a03;
+            --amber-100: #422a06;
+            --amber-200: #78350f;
+            --amber-700: #fbbf24;
+            --amber-800: #fde68a;
+
+            --emerald-50: #042f1e;
+            --emerald-200: #065f46;
+            --emerald-700: #34d399;
+            --emerald-800: #a7f3d0;
+
+            --rose-50: #2c0711;
+            --rose-100: #4c0519;
+            --rose-200: #881337;
+            --rose-600: #fb7185;
+            --rose-700: #fecdd3;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.75);
+            --shadow-xl: 0 20px 35px -10px rgba(0, 0, 0, 0.9);
+        }
+
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -247,6 +288,7 @@
             color: var(--text-main);
             -webkit-font-smoothing: antialiased;
             line-height: 1.4;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
 
         body {
@@ -278,6 +320,54 @@
             background: #94a3b8;
         }
 
+        html.dark-theme ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        html.dark-theme ::-webkit-scrollbar-thumb {
+            background: #333333;
+        }
+        html.dark-theme ::-webkit-scrollbar-thumb:hover {
+            background: #525252;
+        }
+
+        /* =====================================================================
+           FLOATING CORNER MOON / THEME TOGGLE BUTTON
+           ===================================================================== */
+        .theme-moon-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 95;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card);
+            color: #1e293b;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .theme-moon-btn:hover {
+            transform: scale(1.08);
+            border-color: var(--indigo-600);
+        }
+
+        .theme-moon-btn:active {
+            transform: scale(0.95);
+        }
+
+        html.dark-theme .theme-moon-btn {
+            background: #171717;
+            color: #facc15;
+            border-color: #404040;
+            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.18);
+        }
+
         /* =====================================================================
            2. HEADER & NAVIGATION CONTROLS
            ===================================================================== */
@@ -288,7 +378,8 @@
             position: sticky;
             top: 0;
             z-index: 30;
-            padding: 12px 16px;
+            padding: 12px 54px 12px 16px;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
         }
 
         .header-inner {
@@ -359,6 +450,10 @@
             color: var(--indigo-700);
         }
 
+        html.dark-theme .brand-trigger:hover .brand-title {
+            color: #a5b4fc;
+        }
+
         .year-badge {
             display: inline-flex;
             align-items: center;
@@ -369,6 +464,10 @@
             background: var(--indigo-50);
             color: var(--indigo-700);
             border: 1px solid var(--indigo-200);
+        }
+
+        html.dark-theme .year-badge {
+            color: #c7d2fe;
         }
 
         .brand-subtitle {
@@ -398,7 +497,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             border: 1px solid var(--border-color);
-            background: #ffffff;
+            background: var(--bg-card);
             color: var(--text-main);
             cursor: pointer;
             transition: all 0.15s ease;
@@ -406,7 +505,7 @@
         }
 
         .btn:hover {
-            background: #f8fafc;
+            background: var(--bg-subtle);
             border-color: var(--border-strong);
         }
 
@@ -463,6 +562,10 @@
             background: var(--indigo-100);
         }
 
+        html.dark-theme .btn-soft-indigo {
+            color: #c7d2fe;
+        }
+
         .btn-soft-amber {
             background: var(--amber-50);
             color: var(--amber-800);
@@ -511,7 +614,7 @@
             padding: 7px 10px;
             border-radius: 10px;
             border: 1px solid var(--border-strong);
-            background: #ffffff;
+            background: var(--bg-card);
             color: var(--text-main);
             font-size: 0.82rem;
             font-weight: 700;
@@ -590,7 +693,7 @@
             gap: 10px;
             font-size: 0.78rem;
             color: var(--text-secondary);
-            background: #ffffff;
+            background: var(--bg-card);
             padding: 6px 12px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -637,7 +740,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            padding: 8px 14px;
+            padding: 8px 54px 8px 14px;
             background: #0f172a;
             color: #ffffff;
             border-bottom: 1px solid #334155;
@@ -744,7 +847,7 @@
             position: sticky;
             top: 0;
             z-index: 15;
-            background: #f1f5f9;
+            background: var(--bg-subtle);
             border-bottom: 2px solid var(--border-strong);
             border-right: 1px solid var(--border-color);
             padding: 10px 4px;
@@ -777,6 +880,10 @@
             background: var(--indigo-100);
             color: var(--indigo-700);
             border-bottom-color: var(--indigo-600);
+        }
+
+        html.dark-theme .schedule-table thead th.today-col {
+            color: #c7d2fe;
         }
 
         .today-red-dot {
@@ -819,10 +926,11 @@
             vertical-align: middle;
             text-align: center;
             height: 64px;
+            background-color: var(--bg-card);
         }
 
         .schedule-table tbody tr:hover td {
-            background-color: #f8fafc;
+            background-color: var(--bg-subtle);
         }
 
         .schedule-table tbody td.sticky-col {
@@ -833,6 +941,7 @@
             unicode-bidi: isolate;
             text-align: left;
             padding: 6px 8px 6px 12px;
+            background: var(--bg-card);
             border-left: 4px solid var(--indigo-600);
             border-right: 2px solid var(--indigo-200);
             box-shadow: 2px 0 6px rgba(79, 70, 229, 0.08);
@@ -871,6 +980,10 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.2;
+        }
+
+        html.dark-theme .emp-name {
+            color: #f8fafc;
         }
 
         .emp-role {
@@ -916,6 +1029,10 @@
             background-color: rgba(254, 243, 199, 0.28);
         }
 
+        html.dark-theme .schedule-table tbody td.weekend-cell {
+            background-color: rgba(245, 158, 11, 0.08);
+        }
+
         .shift-slot {
             width: 100%;
             height: 100%;
@@ -938,11 +1055,15 @@
         }
 
         .shift-empty {
-            border: 1px dashed #cbd5e1;
-            color: #94a3b8;
+            border: 1px dashed var(--border-strong);
+            color: var(--text-muted);
             background: rgba(255, 255, 255, 0.6);
             font-size: 0.72rem;
             font-weight: 600;
+        }
+
+        html.dark-theme .shift-empty {
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .shift-empty:hover {
@@ -967,6 +1088,12 @@
             background: #f1f5f9;
             border-color: #cbd5e1;
             color: #475569;
+        }
+
+        html.dark-theme .shift-vrij {
+            background: #171717;
+            border-color: #333333;
+            color: #a3a3a3;
         }
 
         .shift-vakantie {
@@ -1006,8 +1133,12 @@
             border: 1px solid var(--indigo-200);
         }
 
+        html.dark-theme .days-count-badge {
+            color: #c7d2fe;
+        }
+
         .schedule-table tfoot td {
-            background: #f8fafc;
+            background: var(--bg-subtle);
             border-top: 2px solid var(--border-strong);
             border-right: 1px solid var(--border-color);
             padding: 8px 4px;
@@ -1023,7 +1154,7 @@
             z-index: 20;
             direction: ltr;
             unicode-bidi: isolate;
-            background: #f1f5f9;
+            background: var(--bg-subtle);
             text-align: left;
             padding-left: 12px;
             color: var(--text-main);
@@ -1040,7 +1171,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background: #0f172a;
+            background: #000000;
             overflow: hidden;
         }
 
@@ -1142,6 +1273,10 @@
             box-shadow: 2px 0 8px rgba(79, 70, 229, 0.16);
         }
 
+        html.dark-theme #fullscreen-overlay-shell.active td.sticky-col {
+            background: linear-gradient(90deg, #1e1b4b 0%, #0a0a0a 100%) !important;
+        }
+
         #fullscreen-overlay-shell.active .emp-cell-wrap {
             display: flex !important;
             flex-direction: row !important;
@@ -1176,6 +1311,11 @@
             background: rgba(255, 255, 255, 0.92);
             padding: 2px 4px;
             border-radius: 4px;
+        }
+
+        html.dark-theme #fullscreen-overlay-shell.active .emp-name {
+            color: #f8fafc !important;
+            background: rgba(20, 20, 20, 0.9);
         }
 
         #fullscreen-overlay-shell.active .emp-role {
@@ -1235,6 +1375,10 @@
             padding: 16px;
         }
 
+        html.dark-theme .modal-backdrop {
+            background: rgba(0, 0, 0, 0.78);
+        }
+
         .modal-backdrop.open {
             display: flex;
         }
@@ -1275,7 +1419,7 @@
         }
 
         .modal-card {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 18px;
             width: 100%;
             max-width: 520px;
@@ -1296,7 +1440,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #f8fafc;
+            background: var(--bg-subtle);
         }
 
         .modal-title {
@@ -1316,7 +1460,7 @@
             height: 30px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            background: #ffffff;
+            background: var(--bg-card);
             color: var(--text-secondary);
             cursor: pointer;
             display: inline-flex;
@@ -1344,7 +1488,7 @@
             padding: 9px 10px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
-            background: #ffffff;
+            background: var(--bg-card);
             text-align: left;
             cursor: pointer;
             transition: all 0.12s ease;
@@ -1388,6 +1532,7 @@
             padding: 8px 10px;
             border-radius: 10px;
             border: 1px solid var(--border-strong);
+            background: var(--bg-card);
             font-size: 0.84rem;
             color: var(--text-main);
             outline: none;
@@ -1401,7 +1546,7 @@
         .modal-footer {
             padding: 12px 18px;
             border-top: 1px solid var(--border-color);
-            background: #f8fafc;
+            background: var(--bg-subtle);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -1410,7 +1555,7 @@
         }
 
         .png-preview-box {
-            background: #f1f5f9;
+            background: var(--bg-subtle);
             border: 1px solid var(--border-strong);
             border-radius: 12px;
             padding: 10px;
@@ -1439,6 +1584,10 @@
             font-size: 0.75rem;
             font-weight: 600;
             line-height: 1.35;
+        }
+
+        html.dark-theme .share-helper-note {
+            color: #c7d2fe;
         }
 
         #toast-container {
@@ -1471,6 +1620,11 @@
             animation: slideUp 0.2s ease-out;
         }
 
+        html.dark-theme .toast-item {
+            background: #171717;
+            border: 1px solid #404040;
+        }
+
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(10px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -1480,7 +1634,7 @@
            7. PRINT STYLES
            ===================================================================== */
         @media print {
-            .app-header, .sub-toolbar, .emp-del-btn, #fullscreen-top-bar {
+            .app-header, .sub-toolbar, .emp-del-btn, #fullscreen-top-bar, .theme-moon-btn {
                 display: none !important;
             }
             .main-workspace {
@@ -1502,6 +1656,24 @@
     </style>
 </head>
 <body>
+    <!-- FLOATING CORNER MOON BUTTON (DARK / LIGHT THEME TOGGLE) -->
+    <button type="button" id="theme-toggle-btn" class="theme-moon-btn" title="Schimbă culoarea fundalului (Negru / Alb)" aria-label="Schimbă tema întunecată">
+        <svg id="moon-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg id="sun-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
     <!-- TOP HEADER BAR -->
     <header class="app-header">
         <div class="header-inner">
@@ -1870,6 +2042,7 @@
         const STORAGE_KEY = 'planificator_program_o_tura_2026_2027_v7';
         const LANG_STORAGE_KEY = 'planificator_program_lang_2026_2027_v1';
         const META_STORAGE_KEY = 'planificator_program_meta_2026_2027_v1';
+        const THEME_STORAGE_KEY = 'planificator_program_theme_2026_2027_v1';
         const IDB_DB_NAME = 'PlanificatorProgramDB_2026_2027';
         const IDB_STORE_NAME = 'kv_store';
         const WINDOW_NAME_PREFIX = 'PLANIFICATOR_PERSIST_V1::';
@@ -1991,7 +2164,7 @@
             const db = await getIndexedDB();
             if (!db) return;
 
-            const keys = [STORAGE_KEY, LANG_STORAGE_KEY, META_STORAGE_KEY];
+            const keys = [STORAGE_KEY, LANG_STORAGE_KEY, META_STORAGE_KEY, THEME_STORAGE_KEY];
             let updatedAny = false;
 
             await Promise.all(keys.map((key) => new Promise((resolve) => {
@@ -2023,6 +2196,39 @@
             if (updatedAny && typeof onHydrated === 'function') {
                 onHydrated();
             }
+        }
+
+        /* =====================================================================
+           DARK / LIGHT THEME TOGGLE (MOON BUTTON)
+           ===================================================================== */
+        function applyDarkThemeState(isDark) {
+            const htmlEl = document.documentElement;
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+            if (isDark) {
+                htmlEl.classList.add('dark-theme');
+                if (moonIcon) moonIcon.style.display = 'none';
+                if (sunIcon) sunIcon.style.display = 'block';
+                if (metaTheme) metaTheme.setAttribute('content', '#000000');
+            } else {
+                htmlEl.classList.remove('dark-theme');
+                if (moonIcon) moonIcon.style.display = 'block';
+                if (sunIcon) sunIcon.style.display = 'none';
+                if (metaTheme) metaTheme.setAttribute('content', '#1d4ed8');
+            }
+        }
+
+        function loadSavedTheme() {
+            const savedTheme = safeGetStorage(THEME_STORAGE_KEY);
+            applyDarkThemeState(savedTheme === 'dark');
+        }
+
+        function toggleDarkTheme() {
+            const isNowDark = !document.documentElement.classList.contains('dark-theme');
+            applyDarkThemeState(isNowDark);
+            safeSetStorage(THEME_STORAGE_KEY, isNowDark ? 'dark' : 'light');
         }
 
         /* =====================================================================
@@ -2515,7 +2721,7 @@
                 noEmployeesCanvas: 'На эту неделю сотрудники не добавлены.',
                 removeEmployeeTitle: 'Удалить сотрудника',
                 setCellTitle: 'Нажмите, чтобы задать график',
-                days: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+                days: ['Понедельник', 'Вторник', 'Среда', 'Чт', 'Пятница', 'Суббота', 'Воскресенье'],
                 daysShort: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
                 monthsShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
                 shiftModalTitleDay: 'График • {day}',
@@ -5020,6 +5226,7 @@
         }
 
         function bindEvents() {
+            document.getElementById('theme-toggle-btn').addEventListener('click', toggleDarkTheme);
             document.getElementById('brand-trigger-btn').addEventListener('click', enterFullscreenSchedule);
             document.getElementById('prev-week-btn').addEventListener('click', () => changeWeek(-1));
             document.getElementById('next-week-btn').addEventListener('click', () => changeWeek(1));
@@ -5046,13 +5253,6 @@
             document.getElementById('fs-rotate-btn').addEventListener('click', toggleRotationDirection);
             document.getElementById('fs-exit-btn').addEventListener('click', () => exitFullscreenSchedule(false));
 
-            document.getElementById('fullscreen-rotated-stage').addEventListener('dblclick', () => {
-                if (state.isFullscreen && window.innerWidth < 768) {
-                    exitFullscreenSchedule(false);
-                }
-            });
-
-            // Delegated click handling for table shift cells and employee delete buttons
             document.getElementById('table-body').addEventListener('click', (e) => {
                 const delBtn = e.target.closest('[data-delete-emp]');
                 if (delBtn) {
@@ -5061,20 +5261,23 @@
                     return;
                 }
 
-                const slotEl = e.target.closest('.shift-slot[data-emp-id]');
+                const slotEl = e.target.closest('[data-emp-id][data-day-index]');
                 if (slotEl) {
                     const empId = slotEl.getAttribute('data-emp-id');
                     const dayIndex = parseInt(slotEl.getAttribute('data-day-index'), 10);
-                    if (empId && !Number.isNaN(dayIndex)) {
-                        openShiftModal(empId, dayIndex);
-                    }
+                    openShiftModal(empId, dayIndex);
                 }
             });
 
-            // Shift modal controls
-            document.getElementById('shift-modal').addEventListener('click', (e) => {
-                if (e.target === e.currentTarget) closeShiftModal();
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.getAttribute('data-preset-type');
+                    const label = btn.getAttribute('data-preset-label');
+                    const isExtra = btn.getAttribute('data-preset-extra') === '1';
+                    selectPreset(type, label, isExtra);
+                });
             });
+
             document.getElementById('close-shift-modal-btn').addEventListener('click', closeShiftModal);
             document.getElementById('cancel-shift-btn').addEventListener('click', closeShiftModal);
             document.getElementById('save-shift-btn').addEventListener('click', saveShiftModal);
@@ -5083,27 +5286,17 @@
             document.getElementById('apply-mon-fri-btn').addEventListener('click', applyToMonFri);
             document.getElementById('clear-cell-btn').addEventListener('click', clearCurrentCell);
 
-            document.querySelectorAll('#shift-modal .preset-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const pType = btn.getAttribute('data-preset-type') || 'work';
-                    const pLabel = btn.getAttribute('data-preset-label') || '07:00';
-                    const pExtra = btn.getAttribute('data-preset-extra') === '1';
-                    selectPreset(pType, pLabel, pExtra);
-                });
+            document.getElementById('shift-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'shift-modal') closeShiftModal();
             });
 
-            // Add employee modal controls
-            document.getElementById('emp-modal').addEventListener('click', (e) => {
-                if (e.target === e.currentTarget) closeAddEmployeeModal();
-            });
             document.getElementById('close-emp-modal-btn').addEventListener('click', closeAddEmployeeModal);
             document.getElementById('cancel-emp-btn').addEventListener('click', closeAddEmployeeModal);
             document.getElementById('add-emp-form').addEventListener('submit', submitNewEmployee);
-
-            // Share image modal controls
-            document.getElementById('share-image-modal').addEventListener('click', (e) => {
-                if (e.target === e.currentTarget) closeShareImageModal();
+            document.getElementById('emp-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'emp-modal') closeAddEmployeeModal();
             });
+
             document.getElementById('close-share-modal-btn').addEventListener('click', closeShareImageModal);
             document.getElementById('close-share-footer-btn').addEventListener('click', closeShareImageModal);
             document.getElementById('download-png-btn').addEventListener('click', downloadRenderedSchedulePNG);
@@ -5112,51 +5305,11 @@
             document.getElementById('modal-wa-text-btn').addEventListener('click', shareScheduleTextOnWhatsApp);
             document.getElementById('modal-wa-image-btn').addEventListener('click', () => shareRenderedScheduleImage('whatsapp'));
             document.getElementById('modal-mail-image-btn').addEventListener('click', () => shareRenderedScheduleImage('email'));
-
-            window.addEventListener('pagehide', persistEverythingNow);
-            window.addEventListener('beforeunload', persistEverythingNow);
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'hidden') {
-                    persistEverythingNow();
-                } else {
-                    renderScheduleTable();
-                }
+            document.getElementById('share-image-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'share-image-modal') closeShareImageModal();
             });
 
             window.addEventListener('popstate', () => {
-                if (document.getElementById('shift-modal').classList.contains('open')) {
-                    closeShiftModal();
-                    if (state.isFullscreen) {
-                        try {
-                            window.history.pushState({ scheduleFullscreen90: true, year: state.year, week: state.week }, '', window.location.href);
-                            state.pushedFullscreenState = true;
-                        } catch (err) {}
-                    }
-                    return;
-                }
-
-                if (document.getElementById('emp-modal').classList.contains('open')) {
-                    closeAddEmployeeModal();
-                    if (state.isFullscreen) {
-                        try {
-                            window.history.pushState({ scheduleFullscreen90: true, year: state.year, week: state.week }, '', window.location.href);
-                            state.pushedFullscreenState = true;
-                        } catch (err) {}
-                    }
-                    return;
-                }
-
-                if (document.getElementById('share-image-modal').classList.contains('open')) {
-                    closeShareImageModal();
-                    if (state.isFullscreen) {
-                        try {
-                            window.history.pushState({ scheduleFullscreen90: true, year: state.year, week: state.week }, '', window.location.href);
-                            state.pushedFullscreenState = true;
-                        } catch (err) {}
-                    }
-                    return;
-                }
-
                 if (state.isFullscreen) {
                     exitFullscreenSchedule(true);
                 }
@@ -5164,49 +5317,67 @@
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    if (document.getElementById('shift-modal').classList.contains('open')) {
+                    if (document.getElementById('share-image-modal').classList.contains('open')) {
+                        closeShareImageModal();
+                    } else if (document.getElementById('shift-modal').classList.contains('open')) {
                         closeShiftModal();
                     } else if (document.getElementById('emp-modal').classList.contains('open')) {
                         closeAddEmployeeModal();
-                    } else if (document.getElementById('share-image-modal').classList.contains('open')) {
-                        closeShareImageModal();
                     } else if (state.isFullscreen) {
                         exitFullscreenSchedule(false);
                     }
                 }
             });
 
-            let lastKnownDaySig = getCurrentCalendarDaySignature();
+            window.addEventListener('beforeunload', () => {
+                persistEverythingNow();
+            });
+
+            window.addEventListener('pagehide', () => {
+                persistEverythingNow();
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    persistEverythingNow();
+                } else if (document.visibilityState === 'visible') {
+                    renderScheduleTable();
+                }
+            });
+        }
+
+        function startLiveDayWatcher() {
+            let lastDaySig = getCurrentCalendarDaySignature();
             setInterval(() => {
                 const currentDaySig = getCurrentCalendarDaySignature();
-                if (currentDaySig !== lastKnownDaySig) {
-                    lastKnownDaySig = currentDaySig;
+                if (currentDaySig !== lastDaySig) {
+                    lastDaySig = currentDaySig;
                     renderScheduleTable();
                 }
             }, 30000);
         }
 
-        function initApp() {
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedTheme();
             loadAppState();
             loadSavedMetaAndLanguage();
-            bindEvents();
             applyStaticTranslations();
             populateWeekDropdown();
+            ensureWeekInitialized(state.year, state.week);
+            bindEvents();
             renderScheduleTable();
+            startLiveDayWatcher();
+
             hydrateFromIndexedDBIfNeeded(() => {
+                loadSavedTheme();
                 loadAppState();
                 loadSavedMetaAndLanguage();
                 applyStaticTranslations();
                 populateWeekDropdown();
+                ensureWeekInitialized(state.year, state.week);
                 renderScheduleTable();
             });
-        }
-
-        if (document.readyState === 'loading') {
-            window.addEventListener('DOMContentLoaded', initApp);
-        } else {
-            initApp();
-        }
+        });
     </script>
 </body>
 </html>
